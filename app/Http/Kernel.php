@@ -63,5 +63,9 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'apisecure' => \App\Http\Middleware\ApiSecure::class,
+        'auth.basic' => \App\Http\Middleware\AuthBasic::class,
+        // 'jwt' => \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
+
     ];
 }

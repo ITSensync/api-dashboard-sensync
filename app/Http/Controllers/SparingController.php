@@ -177,4 +177,67 @@ class SparingController extends Controller
             ] : null,
         ]);
     }
-}
+
+
+    public function getData()
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $tgll = date('Y-m-d H:i:s');
+        $minh = date('Y-m-d H:i:s', strtotime('-3 minutes'));
+        
+        $main = [];
+    
+        $devicelocations = [
+            'sparing01' => ['Gistex', -6.9374571, 107.5364919],
+            'sparing02' => ['Indorama PWK', -6.5531083, 107.4101544],
+            'sparing03' => ['PMT', -6.9226832, 107.5413683],
+            'sparing04' => ['Indorama PDL', -6.8953855, 107.4959834],
+            'sparing05' => ['Besland', -6.4493131, 107.4572677],
+            'sparing06' => ['Indotaisei', -6.4244492, 107.4187869],
+            'sparing07' => ['Daliatex', -6.9801221, 107.6185288],
+            'cpp' => ['CPP', -6.5531083, 107.4101544],
+            'ipci' => ['IPCI', -6.5531083, 107.4101544],
+            'spinning' => ['SPINNING', -6.5531083, 107.4101544],
+            'weaving01' => ['WEAVING01', -6.5531083, 107.4101544],
+            'weaving02' => ['WEAVING02', -6.5531083, 107.4101544],
+            'sparing08' => ['Papyrus', -6.5531083, 107.4101544],
+            'sparing09' => ['BCP', -6.5531083, 107.4101544],
+            'sparing10' => ['Pangjaya', -6.5671703, 106.5889997],
+            'sparing_demo_tb' => ['Sparing Demo', -6.5671703, 106.5889997],
+        ];
+    
+        foreach ($devicelocations as $idss => $device) {
+            $query = "SELECT * FROM `$idss` WHERE `time` BETWEEN '$minh' AND '$tgll'";
+            $data = DB::select($query);
+    
+            if (!empty($data)) {
+                $submain = [
+                    'id_device' => $idss,
+                    'NAMA' => $device[0],
+                    'COD' => $data[0]->cod ?? null,
+                    'TSS' => $data[0]->tss ?? null,
+                    'PH' => $data[0]->ph ?? null,
+                    'NH3N' => $data[0]->nh3n ?? null,
+                    'DEBIT' => $data[0]->debit2 ?? null,
+                    'Last Update' => $data[0]->time ?? null,
+                    'Latitude' => $device[1],
+                    'Longitude' => $device[2],
+                ];
+    
+                if ($idss == "sparing06") {
+                    $baku = ($data['cod'] > 100 || $data['tss'] > 150 || $data['nh3n'] > 20) ? "nilai melebihi baku mutu" : "aman";
+                } elseif ($idss == "sparing02") {
+                    $baku = ($data['cod'] > 125 || $data['tss'] > 40 || $data['nh3n'] > 20) ? "nilai melebihi baku mutu" : "aman";
+                } else {
+                    $baku = "aman";
+                }
+    
+                $submain['Baku Mutu'] = $baku;
+                $main[] = $submain;
+            }
+        }
+    
+        return response()->json($main);
+    }
+    
+}    

@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SparingController;
+use App\Http\Controllers\GetDataController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +17,11 @@ use App\Http\Controllers\SparingController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
+    Route::get('sparing/{id_device}', [SparingController::class, 'show']);
+    Route::get('sparing/status/{id_device}', [SparingController::class, 'status']);
+    Route::get('/data-sparing', [GetDataController::class, 'getData']);
 
-Route::get('sparing/{id_device}', 'App\Http\Controllers\SparingController@show');
-Route::get('sparing/status/{id_device}', 'App\Http\Controllers\SparingController@status');
