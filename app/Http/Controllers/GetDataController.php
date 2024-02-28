@@ -11,8 +11,8 @@ class GetDataController extends Controller
     public function getData()
     {
         date_default_timezone_set('Asia/Jakarta');
-        $tgll = date('Y-m-d H:i:s');
-        $minh = date('Y-m-d H:i:s', strtotime('-1 days'));
+        $minh = date('Y-m-d 00:00:01');
+        $tgll = date('Y-m-d 23:59:59');
 
         $main = [];
 
