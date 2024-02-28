@@ -11,6 +11,7 @@ class GetDataController extends Controller
     public function getData()
     {
         date_default_timezone_set('Asia/Jakarta');
+        $currentTime = date('H:i:s');
         $minh = date('Y-m-d 00:00:01');
         $tgll = date('Y-m-d 23:59:59');
 
@@ -43,20 +44,15 @@ class GetDataController extends Controller
                 return response()->json(['status' => 'ERR', 'message' => 'Device ID tidak betul'], 400);
             }
 
-            // Hitung jumlah data yang seharusnya ada per hari
-            $totalDataPerDay = 720;
-
-
-            // Ambil data per hari dari tabel
+            // Ambil total data dari tabel
             $query = "SELECT COUNT(*) AS total FROM `$idss` WHERE `time` BETWEEN '$minh' AND '$tgll'";
             $totalData = DB::select($query);
-            $count = $totalData[0]->total;
 
-            // Hitung persentase data yang ada
-            $percent = number_format(($count / $totalDataPerDay) * 100, 2) . '%';
+            // Hitung berapa banyak interval waktu yang telah berlalu sejak jam 00:00:01
+            list($hour, $minute, $second) = explode(':', $currentTime);
+            $intervalCount = ($hour * 60 * 60 + $minute * 60 + $second) / 120; // Interval 2 menit
 
-            // Hitung selisih data yang seharusnya ada dengan data yang ada
-            $diff = $totalDataPerDay - $count;
+            $data_should_be = $intervalCount;
 
             // Ambil data terakhir dari tabel
             $query2 = "SELECT * FROM `$idss` ORDER BY `time` DESC LIMIT 1";
@@ -64,17 +60,15 @@ class GetDataController extends Controller
 
             if (!empty($data)) {
                 $count = $totalData[0]->total;
-                $percent = number_format(($count / 720) * 100, 2) . '%';
-                $diff = 720 - $count;
-
-
+                $percent = number_format(($count / $data_should_be) * 100, 2) . '%';
+                $diff = $data_should_be - $count;
 
                 $submain = [
                     'uuid' => Str::uuid(), // Generate UUID
                     'id' => $idss,
                     'time' => $data[0]->time,
                     'title' => $device[0],
-                    'data_should_be' => $totalDataPerDay, //data kuduna
+                    'data_should_be' => $data_should_be, // Jumlah data yang seharusnya pada jam tertentu
                     'data_count' => $count,
                     'percent' => $percent, // Tambahkan data percent
                     'diff' => $diff, // Tambahkan data diff
@@ -82,15 +76,6 @@ class GetDataController extends Controller
                     'Longitude' => $device[2],
                 ];
 
-                // if ($idss == "sparing06") {
-                //     $baku = ($data[0]->cod > 100 || $data[0]->tss > 150 || $data[0]->nh3n > 20) ? "nilai melebihi baku mutu" : "aman";
-                // } elseif ($idss == "sparing02") {
-                //     $baku = ($data[0]->cod > 125 || $data[0]->tss > 40 || $data[0]->nh3n > 20) ? "nilai melebihi baku mutu" : "aman";
-                // } else {
-                //     $baku = "aman";
-                // }
-
-                // $submain['Baku Mutu'] = $baku;
                 $main[] = $submain;
             }
         }
