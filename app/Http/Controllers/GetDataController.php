@@ -14,6 +14,8 @@ class GetDataController extends Controller
         $minh = date('Y-m-d 00:00:01');
         $tgll = date('Y-m-d 23:59:59');
 
+
+
         $main = [];
 
         $devicelocations = [
@@ -41,10 +43,20 @@ class GetDataController extends Controller
                 return response()->json(['status' => 'ERR', 'message' => 'Device ID tidak betul'], 400);
             }
 
+            // Hitung jumlah data yang seharusnya ada per hari
+            $totalDataPerDay = 720;
+
+
             // Ambil data per hari dari tabel
             $query = "SELECT COUNT(*) AS total FROM `$idss` WHERE `time` BETWEEN '$minh' AND '$tgll'";
             $totalData = DB::select($query);
+            $count = $totalData[0]->total;
 
+            // Hitung persentase data yang ada
+            $percent = number_format(($count / $totalDataPerDay) * 100, 2) . '%';
+
+            // Hitung selisih data yang seharusnya ada dengan data yang ada
+            $diff = $totalDataPerDay - $count;
 
             // Ambil data terakhir dari tabel
             $query2 = "SELECT * FROM `$idss` ORDER BY `time` DESC LIMIT 1";
@@ -62,6 +74,7 @@ class GetDataController extends Controller
                     'id' => $idss,
                     'time' => $data[0]->time,
                     'title' => $device[0],
+                    'data_should_be' => $totalDataPerDay, //data kuduna
                     'data_count' => $count,
                     'percent' => $percent, // Tambahkan data percent
                     'diff' => $diff, // Tambahkan data diff
