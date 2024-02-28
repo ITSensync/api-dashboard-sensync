@@ -52,7 +52,7 @@ class GetDataController extends Controller
             list($hour, $minute, $second) = explode(':', $currentTime);
             $intervalCount = ($hour * 60 * 60 + $minute * 60 + $second) / 120; // Interval 2 menit
 
-            $data_should_be = $intervalCount;
+            $data_should_be = round($intervalCount);
 
             // Ambil data terakhir dari tabel
             $query2 = "SELECT * FROM `$idss` ORDER BY `time` DESC LIMIT 1";
