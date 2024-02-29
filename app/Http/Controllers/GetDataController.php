@@ -15,8 +15,6 @@ class GetDataController extends Controller
         $minh = date('Y-m-d 00:00:01');
         $tgll = date('Y-m-d 23:59:59');
 
-
-
         $main = [];
 
         $devicelocations = [
@@ -55,7 +53,7 @@ class GetDataController extends Controller
             $data_should_be = round($intervalCount);
 
             // Ambil data terakhir dari tabel
-            $query2 = "SELECT * FROM `$idss` ORDER BY `time` DESC LIMIT 1";
+            $query2 = "SELECT `time` FROM `$idss` ORDER BY `time` DESC LIMIT 1";
             $data = DB::select($query2);
 
             if (!empty($data)) {
