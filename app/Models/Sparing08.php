@@ -29,7 +29,14 @@ class Sparing08 extends Model
         "nama" => "PT. Papyrus Sakti Paper Mill",
         "alamat" => "Jl. Raya Banjaran Km. 16.2, Banjaran, Batukarut, Kec. Arjasari, Kabupaten Bandung, Jawa Barat 40379",
         "Lat" => -7.0384787,
-        "Long" => 107.5906626
+        "Long" => 107.5906626,
+        'bakumutu' => [
+            'ph' => ['min' => 6, 'max' => 9],
+            'cod' => ['min' => 0, 'max' => 175],
+            'tss' => ['min' => 0, 'max' => 90],
+            'nh3n' => ['min' => null, 'max' => null],
+            // Tambahkan parameter lain jika diperlukan
+        ]
     ];
 
     public static function getData()

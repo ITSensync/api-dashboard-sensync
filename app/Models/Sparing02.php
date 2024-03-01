@@ -29,7 +29,14 @@ class Sparing02 extends Model
         "nama" => "PT.INDO-RAMA SYNTHETICS.Tbk",
         "alamat" => "Jl. Industri Ubrug, Kembangkuning, Purwakarta Regency, West Java, Indonesia",
         "Lat" => -6.5531083,
-        "Long" => 107.4101544
+        "Long" => 107.4101544,
+        'bakumutu' => [
+            'ph' => ['min' => 6, 'max' => 9],
+            'cod' => ['min' => 0, 'max' => 125],
+            'tss' => ['min' => 0, 'max' => 40],
+            'nh3n' => ['min' => 0, 'max' => 20],
+            // Tambahkan parameter lain jika diperlukan
+        ]
     ];
     public static function getData()
     {

@@ -24,4 +24,5 @@ use App\Http\Controllers\GetDataController;
     // Route::get('sparing/{id_device}', [SparingController::class, 'show']);
     // Route::get('sparing/status/{id_device}', [SparingController::class, 'status']);
     Route::get('sparing/data', [GetDataController::class, 'getData']);
+    Route::get('sparing/mutu', [GetDataController::class, 'getDataMutu']);
 

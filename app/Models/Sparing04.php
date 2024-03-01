@@ -30,7 +30,14 @@ class Sparing04 extends Model
         "nama" => "PT.INDO-RAMA SYNTHETICS.Tbk, KAB. Bandung Barat",
         "alamat" => "Jl. Batujajar Km 5.5 Komplek Giri Asih No 9, Samping, Giriasih, Batujajar, West Bandung Regency, West Java 40561, Indonesia",
         "Lat" => -6.8953855,
-        "Long" => 107.4959834
+        "Long" => 107.4959834,
+        'bakumutu' => [
+            'ph' => ['min' => 6, 'max' => 9],
+            'cod' => ['min' => 0, 'max' => 125],
+            'tss' => ['min' => 0, 'max' => 40],
+            'nh3n' => ['min' => 0, 'max' => 20],
+            // Tambahkan parameter lain jika diperlukan
+        ]
     ];
 
     public static function getData()

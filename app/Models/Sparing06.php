@@ -29,7 +29,14 @@ class Sparing06 extends Model
         "nama" => "PT. Indotaisei Indah Development",
         "alamat" => "Kawasan Indotaisei. Blok K/4, Kalihurip, Cikampek, Karawang Regency, West Java 41373, Indonesia",
         "Lat" => -6.4244492,
-        "Long" => 107.4187869
+        "Long" => 107.4187869,
+        'bakumutu' => [
+            'ph' => ['min' => 6, 'max' => 9],
+            'cod' => ['min' => 0, 'max' => 100],
+            'tss' => ['min' => 0, 'max' => 150],
+            'nh3n' => ['min' => 0, 'max' => 20],
+            // Tambahkan parameter lain jika diperlukan
+        ]
     ];
 
     public static function getData()

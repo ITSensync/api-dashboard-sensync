@@ -30,7 +30,14 @@ class Sparing03 extends Model
         "nama"  => "PT Pulau Mas Texindo",
         "alamat" => "Jl. Nanjung No.Km. 2,2, Lagadar, Kec. Margaasih, Kabupaten Bandung, Jawa Barat 40216, Indonesia",
         "Lat" => -6.9226832,
-        "Long" => 107.5413683
+        "Long" => 107.5413683,
+        'bakumutu' => [
+            'ph' => ['min' => 6, 'max' => 9],
+            'cod' => ['min' => 0, 'max' => 115],
+            'tss' => ['min' => 0, 'max' => 30],
+            'nh3n' => ['min' => 0, 'max' => 8],
+            // Tambahkan parameter lain jika diperlukan
+        ]
     ];
 
     public static function getData()

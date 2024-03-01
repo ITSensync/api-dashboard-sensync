@@ -29,7 +29,14 @@ class Sparing07 extends Model
         "nama" => "PT Daliatex Kusuma",
         "alamat" => " Jalan Mochammad Toha KM.7,3 No.307, Citeureup, Kec. Dayeuhkolot, Kabupaten Bandung, Jawa Barat 40257",
         "Lat" => -6.9801221,
-        "Long" => 107.6185288
+        "Long" => 107.6185288,
+        'bakumutu' => [
+            'ph' => ['min' => 6, 'max' => 9],
+            'cod' => ['min' => 0, 'max' => 115],
+            'tss' => ['min' => 0, 'max' => 30],
+            'nh3n' => ['min' => 0, 'max' => 8],
+            // Tambahkan parameter lain jika diperlukan
+        ]
     ];
 
     public static function getData()

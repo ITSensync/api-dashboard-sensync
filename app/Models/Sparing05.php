@@ -29,7 +29,14 @@ class Sparing05 extends Model
         "nama" => "Kawasan Berikat Pt Besland Indo",
         "alamat" => "Wisma Bukit Indah Block L Kawasan Kota Bukit Indah Cinangka Purwakarta, Dangdeur, Bungursari, Purwakarta Regency, West Java 41181, Indonesia",
         "Lat" => -6.4493131,
-        "Long" => 107.4572677
+        "Long" => 107.4572677,
+        'bakumutu' => [
+            'ph' => ['min' => 6, 'max' => 9],
+            'cod' => ['min' => 0, 'max' => 100],
+            'tss' => ['min' => 0, 'max' => 150],
+            'nh3n' => ['min' => 0, 'max' => 20],
+            // Tambahkan parameter lain jika diperlukan
+        ]
     ];
 
     public static function getData()

@@ -29,7 +29,14 @@ class Sparing10 extends Model
             "nama" => "PT. Sinar Pangjaya Mulia",
             "alamat" => "Jl. Mahar Martanegara No.175, Utama, Kec. Cimahi Sel., Kota Cimahi, Jawa Barat 40522",
             "Lat" => -6.5671703,
-            "Long" => 106.5889997
+            "Long" => 106.5889997,
+            'bakumutu' => [
+                'ph' => ['min' => 6, 'max' => 9],
+                'cod' => ['min' => 0, 'max' => 115],
+                'tss' => ['min' => 0, 'max' => 30],
+                'nh3n' => ['min' => 0, 'max' => 8],
+                // Tambahkan parameter lain jika diperlukan
+            ]
     ];
 
     public static function getData()
