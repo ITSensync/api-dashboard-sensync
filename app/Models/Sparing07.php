@@ -39,4 +39,8 @@ class Sparing07 extends BaseSparing
             // Tambahkan parameter lain jika diperlukan
         ]
     ];
+    public static function getData()
+    {
+        return self::$data;
+    }
 }

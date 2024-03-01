@@ -40,7 +40,7 @@ class BaseSparing extends Model
 
         if (!empty($data)) {
             $count = $totalData[0]->total;
-            $percent = number_format(($count / $data_should_be) * 100, 2) . '%';
+            $percent = number_format(($count / $data_should_be) * 100, 2) ;
             $diff = $data_should_be - $count;
 
             $result = [

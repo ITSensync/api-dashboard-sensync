@@ -91,61 +91,61 @@ class GetDataController extends Controller
         $devices = [
             'Sparing01' => [
                 'table' => 'sparing01',
-                'title' => 'PT Gistex Textile Division',
+                'title' => 'Gistex',
                 'latitude' => -6.9374571,
                 'longitude' => 107.5364919,
             ],
             'Sparing02' => [
                 'table' => 'sparing02',
-                'title' => 'PT.INDO-RAMA SYNTHETICS.Tbk',
+                'title' => 'Indorama PWK',
                 'latitude' => -6.5531083,
                 'longitude' => 107.4101544,
             ],
             'Sparing03' => [
                 'table' => 'sparing03',
-                'title' => 'PT Pulau Mas Texindo',
+                'title' => 'PMT',
                 'latitude' => -6.9226832,
                 'longitude' => 107.5413683,
             ],
             'Sparing04' => [
                 'table' => 'sparing04',
-                'title' => 'PT.INDO-RAMA SYNTHETICS.Tbk, KAB. Bandung Barat',
+                'title' => 'Indorama PDL',
                 'latitude' => -6.8953855,
                 'longitude' => 107.4959834,
             ],
             'Sparing05' => [
                 'table' => 'sparing05',
-                'title' => 'Kawasan Berikat Pt Besland Indo',
+                'title' => 'Besland',
                 'latitude' => -6.4493131,
                 'longitude' => 107.4572677,
             ],
             'Sparing06' => [
                 'table' => 'sparing06',
-                'title' => 'PT. Indotaisei Indah Development',
+                'title' => 'Indotaisei',
                 'latitude' => -6.4244492,
                 'longitude' =>107.4187869,
             ],
             'Sparing07' => [
                 'table' => 'sparing07',
-                'title' => 'PT Daliatex Kusuma',
+                'title' => 'Daliatex',
                 'latitude' => -6.9801221,
                 'longitude' => 107.6185288,
             ],
             'Sparing08' => [
                 'table' => 'sparing08',
-                'title' => 'PT. Papyrus Sakti Paper Mill',
+                'title' => 'Papyrus',
                 'latitude' => -7.0384787,
                 'longitude' => 107.5906626,
             ],
             'Sparing09' => [
                 'table' => 'sparing09',
-                'title' => 'PT. BINTANG CIPTAPERKASA',
+                'title' => 'BCP',
                 'latitude' => -7.0465691,
                 'longitude' => 107.7506977,
             ],
             'Sparing10' => [
                 'table' => 'sparing10',
-                'title' => 'PT. Sinar Pangjaya Mulia',
+                'title' => 'Pangjaya',
                 'latitude' => -6.5671703,
                 'longitude' => 106.5889997,
             ],
@@ -184,7 +184,7 @@ class GetDataController extends Controller
         $data = [];
         foreach ($devices as $device) {
             $model = "App\Models\\$device";
-            $deviceData = $model::getDataForDashboard();
+            $deviceData = $model::getData();
             $lastData = $model::orderBy('time', 'desc')->first();
 
             $deviceValue = [];

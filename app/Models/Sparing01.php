@@ -41,4 +41,8 @@ class Sparing01 extends BaseSparing
         ]
     ];
 
+    public static function getData()
+    {
+        return self::$data;
+    }
 }
