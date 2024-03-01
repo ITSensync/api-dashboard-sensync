@@ -20,13 +20,13 @@ class BaseSparing extends Model
         // tambahkan kolom lain jika diperlukan
     ];
 
-    public static function getDataForDashboard($tableName, $title, $latitude, $longitude)
+    public static function getDataForDashboard($table, $title, $latitude, $longitude)
     {
         $currentTime = date('H:i:s');
         $minh = date('Y-m-d 00:00:01');
         $tgll = date('Y-m-d 23:59:59');
 
-        $query = "SELECT COUNT(*) AS total FROM `$tableName` WHERE `time` BETWEEN '$minh' AND '$tgll'";
+        $query = "SELECT COUNT(*) AS total FROM `$table` WHERE `time` BETWEEN '$minh' AND '$tgll'";
         $totalData = DB::select($query);
 
         list($hour, $minute, $second) = explode(':', $currentTime);
@@ -34,7 +34,7 @@ class BaseSparing extends Model
 
         $data_should_be = round($intervalCount);
 
-        $query2 = "SELECT `time` FROM `$tableName` ORDER BY `time` DESC LIMIT 1";
+        $query2 = "SELECT `time` FROM `$table` ORDER BY `time` DESC LIMIT 1";
         $data = DB::select($query2);
 
         if (!empty($data)) {
@@ -44,7 +44,7 @@ class BaseSparing extends Model
 
             $result = [
                 'uuid' => Str::uuid(),
-                'id' => $tableName,
+                'id' => $table,
                 'time' => $data[0]->time,
                 'title' => $title,
                 'data_should_be' => $data_should_be,
