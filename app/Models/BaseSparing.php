@@ -48,6 +48,7 @@ class BaseSparing extends Model
                 $count = $totalData[0]->total;
                 $percent = ($count / $data_should_be) * 100;
                 $percentFormatted = number_format($percent, 2);
+                $percentFloat = floatval($percentFormatted); // Konversi ke float
                 $diff = $data_should_be - $count;
 
                 $result = [
@@ -57,7 +58,7 @@ class BaseSparing extends Model
                     'title' => $title,
                     'data_should_be' => $data_should_be,
                     'data_count' => $count,
-                    'percent' => $percentFormatted,
+                    'percent' => $percentFloat,
                     'diff' => $diff,
                     'Latitude' => $latitude,
                     'Longitude' => $longitude,
