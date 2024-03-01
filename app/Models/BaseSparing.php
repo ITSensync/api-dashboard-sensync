@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cache;
 
 class BaseSparing extends Model
 {
@@ -22,50 +23,58 @@ class BaseSparing extends Model
 
     public static function getDataForDashboard($table, $title, $latitude, $longitude)
     {
-        date_default_timezone_set('Asia/Jakarta');
-        $currentTime = date('H:i:s');
-        $minh = date('Y-m-d 00:00:01');
-        $tgll = date('Y-m-d 23:59:59');
+        $cacheKey = "dashboard_data_$table";
+        $minutes = 10; // Cache for 10 minutes (adjust as needed)
 
-        $query = "SELECT COUNT(*) AS total FROM `$table` WHERE `time` BETWEEN '$minh' AND '$tgll'";
-        $totalData = DB::select($query);
+        return Cache::remember($cacheKey, $minutes, function () use ($table, $title, $latitude, $longitude) {
+            date_default_timezone_set('Asia/Jakarta');
+            $currentTime = date('H:i:s');
+            $minh = date('Y-m-d 00:00:01');
+            $tgll = date('Y-m-d 23:59:59');
 
-        // Hitung berapa banyak interval waktu yang telah berlalu sejak jam 00:00:01
-        list($hour, $minute, $second) = explode(':', $currentTime);
-        $intervalCount = ($hour * 60 * 60 + $minute * 60 + $second) / 120; // Interval 2 menit
+            $query = "SELECT COUNT(*) AS total FROM `$table` WHERE `time` BETWEEN '$minh' AND '$tgll'";
+            $totalData = DB::select($query);
 
-        $data_should_be = round($intervalCount);
+            // Hitung berapa banyak interval waktu yang telah berlalu sejak jam 00:00:01
+            list($hour, $minute, $second) = explode(':', $currentTime);
+            $intervalCount = ($hour * 60 * 60 + $minute * 60 + $second) / 120; // Interval 2 menit
 
-        $query2 = "SELECT `time` FROM `$table` ORDER BY `time` DESC LIMIT 1";
-        $data = DB::select($query2);
+            $data_should_be = round($intervalCount);
 
-        if (!empty($data)) {
-            $count = $totalData[0]->total;
-            $percent = ($count / $data_should_be) * 100;
-            $percentFormatted = number_format($percent, 2);
-            $diff = $data_should_be - $count;
+            $query2 = "SELECT `time` FROM `$table` ORDER BY `time` DESC LIMIT 1";
+            $data = DB::select($query2);
 
-            $result = [
-                'uuid' => Str::uuid(),
-                'id' => $table,
-                'time' => $data[0]->time,
-                'title' => $title,
-                'data_should_be' => $data_should_be,
-                'data_count' => $count,
-                'percent' => $percentFormatted,
-                'diff' => $diff,
-                'Latitude' => $latitude,
-                'Longitude' => $longitude,
-            ];
+            if (!empty($data)) {
+                $count = $totalData[0]->total;
+                $percent = ($count / $data_should_be) * 100;
+                $percentFormatted = number_format($percent, 2);
+                $diff = $data_should_be - $count;
 
-            return $result;
-        }
+                $result = [
+                    'uuid' => Str::uuid(),
+                    'id' => $table,
+                    'time' => $data[0]->time,
+                    'title' => $title,
+                    'data_should_be' => $data_should_be,
+                    'data_count' => $count,
+                    'percent' => $percentFormatted,
+                    'diff' => $diff,
+                    'Latitude' => $latitude,
+                    'Longitude' => $longitude,
+                ];
 
-        return null;
+                return $result;
+            }
+
+            return null;
+        });
     }
 
     public static function getDevices()
     {
+        $cacheKey = 'devices_data';
+        $minutes = 60; // Cache for 1 hour (adjust as needed)
+        return Cache::remember($cacheKey, $minutes, function () {
         return [
             'Sparing01' => [
                 'table' => 'sparing01',
@@ -101,7 +110,7 @@ class BaseSparing extends Model
                 'table' => 'sparing06',
                 'title' => 'Indotaisei',
                 'latitude' => -6.4244492,
-                'longitude' =>107.4187869,
+                'longitude' => 107.4187869,
             ],
             'Sparing07' => [
                 'table' => 'sparing07',
@@ -128,5 +137,6 @@ class BaseSparing extends Model
                 'longitude' => 106.5889997,
             ],
         ];
-    }
+    });
+}
 }
