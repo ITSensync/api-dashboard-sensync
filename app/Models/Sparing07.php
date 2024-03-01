@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Sparing07 extends Model
+class Sparing07 extends BaseSparing
 {
     use HasFactory;
     protected $table = 'sparing07'; // Nama tabel sparing01
@@ -21,6 +21,7 @@ class Sparing07 extends Model
         'nh3n',
         'debit2',
         'debit',
+        'bakumutu',
         // Tambahkan kolom lain sesuai kebutuhan
     ];
 
@@ -38,9 +39,4 @@ class Sparing07 extends Model
             // Tambahkan parameter lain jika diperlukan
         ]
     ];
-
-    public static function getData()
-    {
-        return self::$data;
-    }
 }
