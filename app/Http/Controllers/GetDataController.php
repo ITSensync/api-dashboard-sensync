@@ -63,7 +63,7 @@ class GetDataController extends Controller
             $deviceValue = [];
             foreach ($deviceData['bakumutu'] as $parameter => $value) {
                 $deviceValue[] = [
-                    'nama' => $parameter,
+                    'name' => $parameter,
                     'value' => $lastData->$parameter,
                     'unit' => 'mg/L', // Unit disesuaikan dengan kebutuhan
                     'min' => $value['min'],
