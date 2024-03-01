@@ -184,7 +184,7 @@ class GetDataController extends Controller
         $data = [];
         foreach ($devices as $device) {
             $model = "App\Models\\$device";
-            $deviceData = $model::getData();
+            $deviceData = $model::getDataForDashboard();
             $lastData = $model::orderBy('time', 'desc')->first();
 
             $deviceValue = [];
