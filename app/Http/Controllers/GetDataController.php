@@ -2,6 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Sparing01;
+use App\Models\Sparing02;
+use App\Models\Sparing03;
+use App\Models\Sparing04;
+use App\Models\Sparing05;
+use App\Models\Sparing06;
+use App\Models\Sparing07;
+use App\Models\Sparing08;
+use App\Models\Sparing09;
+use App\Models\Sparing10;
+use App\Models\Sparing11;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -85,16 +96,16 @@ class GetDataController extends Controller
     public function getDataMutu()
     {
         $devices = [
-            'sparing01',
-            'sparing02',
-            'sparing03',
-            'sparing04',
-            'sparing05',
-            'sparing06',
-            'sparing07',
-            'sparing08',
-            'sparing09',
-            'sparing10',
+            'Sparing01',
+            'Sparing02',
+            'Sparing03',
+            'Sparing04',
+            'Sparing05',
+            'Sparing06',
+            'Sparing07',
+            'Sparing08',
+            'Sparing09',
+            'Sparing10',
         ];
 
         $data = [];
