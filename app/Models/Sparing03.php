@@ -28,7 +28,7 @@ class Sparing03 extends BaseSparing
 
     protected static $data = [
         "id" => "sparing03",
-        "nama"  => "PT Pulau Mas Texindo",
+        "nama"  => "PMT",
         "alamat" => "Jl. Nanjung No.Km. 2,2, Lagadar, Kec. Margaasih, Kabupaten Bandung, Jawa Barat 40216, Indonesia",
         "Lat" => -6.9226832,
         "Long" => 107.5413683,

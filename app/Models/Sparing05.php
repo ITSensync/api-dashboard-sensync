@@ -27,7 +27,7 @@ class Sparing05 extends BaseSparing
 
     protected static $data = [
         "id" => "sparing05",
-        "nama" => "Kawasan Berikat Pt Besland Indo",
+        "nama" => "Besland",
         "alamat" => "Wisma Bukit Indah Block L Kawasan Kota Bukit Indah Cinangka Purwakarta, Dangdeur, Bungursari, Purwakarta Regency, West Java 41181, Indonesia",
         "Lat" => -6.4493131,
         "Long" => 107.4572677,

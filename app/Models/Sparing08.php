@@ -27,7 +27,7 @@ class Sparing08 extends BaseSparing
 
     protected static $data = [
         "id" => "sparing08",
-        "nama" => "PT. Papyrus Sakti Paper Mill",
+        "nama" => "Papyrus",
         "alamat" => "Jl. Raya Banjaran Km. 16.2, Banjaran, Batukarut, Kec. Arjasari, Kabupaten Bandung, Jawa Barat 40379",
         "Lat" => -7.0384787,
         "Long" => 107.5906626,
