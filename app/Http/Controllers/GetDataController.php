@@ -153,7 +153,7 @@ class GetDataController extends Controller
             // Tambahkan informasi untuk Sparing02, Sparing03, dan seterusnya
         ];
 
-        $main = [];
+        $main = []; 
         foreach ($devices as $modelName => $deviceInfo) {
             $model = "App\\Models\\$modelName";
             $data = $model::getDataForDashboard($deviceInfo['table'], $deviceInfo['title'], $deviceInfo['latitude'], $deviceInfo['longitude']);

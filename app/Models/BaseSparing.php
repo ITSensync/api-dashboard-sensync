@@ -29,8 +29,9 @@ class BaseSparing extends Model
         $query = "SELECT COUNT(*) AS total FROM `$table` WHERE `time` BETWEEN '$minh' AND '$tgll'";
         $totalData = DB::select($query);
 
-        list($hour, $minute, $second) = explode(':', $currentTime);
-        $intervalCount = ($hour * 60 * 60 + $minute * 60 + $second) / 120;
+        // Hitung berapa banyak interval waktu yang telah berlalu sejak jam 00:00:01
+    list($hour, $minute, $second) = explode(':', $currentTime);
+    $intervalCount = ($hour * 60 * 60 + $minute * 60 + $second) / 120; // Interval 2 menit
 
         $data_should_be = round($intervalCount);
 
