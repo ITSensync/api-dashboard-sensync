@@ -169,16 +169,16 @@ class GetDataController extends Controller
     public function getDataMutu()
     {
         $devices = [
-            'Sparing01',
-            'Sparing02',
-            'Sparing03',
-            'Sparing04',
-            'Sparing05',
-            'Sparing06',
-            'Sparing07',
-            'Sparing08',
-            'Sparing09',
-            'Sparing10',
+            'sparing01',
+            'sparing02',
+            'sparing03',
+            'sparing04',
+            'sparing05',
+            'sparing06',
+            'sparing07',
+            'sparing08',
+            'sparing09',
+            'sparing10',
         ];
 
         $data = [];
