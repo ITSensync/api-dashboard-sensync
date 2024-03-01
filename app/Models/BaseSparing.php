@@ -22,6 +22,7 @@ class BaseSparing extends Model
 
     public static function getDataForDashboard($table, $title, $latitude, $longitude)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $currentTime = date('H:i:s');
         $minh = date('Y-m-d 00:00:01');
         $tgll = date('Y-m-d 23:59:59');
@@ -30,8 +31,8 @@ class BaseSparing extends Model
         $totalData = DB::select($query);
 
         // Hitung berapa banyak interval waktu yang telah berlalu sejak jam 00:00:01
-    list($hour, $minute, $second) = explode(':', $currentTime);
-    $intervalCount = ($hour * 60 * 60 + $minute * 60 + $second) / 120; // Interval 2 menit
+        list($hour, $minute, $second) = explode(':', $currentTime);
+        $intervalCount = ($hour * 60 * 60 + $minute * 60 + $second) / 120; // Interval 2 menit
 
         $data_should_be = round($intervalCount);
 
@@ -40,7 +41,8 @@ class BaseSparing extends Model
 
         if (!empty($data)) {
             $count = $totalData[0]->total;
-            $percent = number_format(($count / $data_should_be) * 100, 2) ;
+            $percent = ($count / $data_should_be) * 100;
+            $percentFormatted = number_format($percent, 2);
             $diff = $data_should_be - $count;
 
             $result = [
@@ -50,7 +52,7 @@ class BaseSparing extends Model
                 'title' => $title,
                 'data_should_be' => $data_should_be,
                 'data_count' => $count,
-                'percent' => $percent,
+                'percent' => $percentFormatted,
                 'diff' => $diff,
                 'Latitude' => $latitude,
                 'Longitude' => $longitude,
