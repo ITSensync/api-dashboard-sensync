@@ -63,4 +63,70 @@ class BaseSparing extends Model
 
         return null;
     }
+
+    public static function getDevices()
+    {
+        return [
+            'Sparing01' => [
+                'table' => 'sparing01',
+                'title' => 'Gistex',
+                'latitude' => -6.9374571,
+                'longitude' => 107.5364919,
+            ],
+            'Sparing02' => [
+                'table' => 'sparing02',
+                'title' => 'Indorama PWK',
+                'latitude' => -6.5531083,
+                'longitude' => 107.4101544,
+            ],
+            'Sparing03' => [
+                'table' => 'sparing03',
+                'title' => 'PMT',
+                'latitude' => -6.9226832,
+                'longitude' => 107.5413683,
+            ],
+            'Sparing04' => [
+                'table' => 'sparing04',
+                'title' => 'Indorama PDL',
+                'latitude' => -6.8953855,
+                'longitude' => 107.4959834,
+            ],
+            'Sparing05' => [
+                'table' => 'sparing05',
+                'title' => 'Besland',
+                'latitude' => -6.4493131,
+                'longitude' => 107.4572677,
+            ],
+            'Sparing06' => [
+                'table' => 'sparing06',
+                'title' => 'Indotaisei',
+                'latitude' => -6.4244492,
+                'longitude' =>107.4187869,
+            ],
+            'Sparing07' => [
+                'table' => 'sparing07',
+                'title' => 'Daliatex',
+                'latitude' => -6.9801221,
+                'longitude' => 107.6185288,
+            ],
+            'Sparing08' => [
+                'table' => 'sparing08',
+                'title' => 'Papyrus',
+                'latitude' => -7.0384787,
+                'longitude' => 107.5906626,
+            ],
+            'Sparing09' => [
+                'table' => 'sparing09',
+                'title' => 'BCP',
+                'latitude' => -7.0465691,
+                'longitude' => 107.7506977,
+            ],
+            'Sparing10' => [
+                'table' => 'sparing10',
+                'title' => 'Pangjaya',
+                'latitude' => -6.5671703,
+                'longitude' => 106.5889997,
+            ],
+        ];
+    }
 }

@@ -13,6 +13,7 @@ use App\Models\Sparing08;
 use App\Models\Sparing09;
 use App\Models\Sparing10;
 use App\Models\Sparing11;
+use App\Models\BaseSparing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -22,70 +23,8 @@ class GetDataController extends Controller
 
     public function getData()
     {
-        $devices = [
-            'Sparing01' => [
-                'table' => 'sparing01',
-                'title' => 'Gistex',
-                'latitude' => -6.9374571,
-                'longitude' => 107.5364919,
-            ],
-            'Sparing02' => [
-                'table' => 'sparing02',
-                'title' => 'Indorama PWK',
-                'latitude' => -6.5531083,
-                'longitude' => 107.4101544,
-            ],
-            'Sparing03' => [
-                'table' => 'sparing03',
-                'title' => 'PMT',
-                'latitude' => -6.9226832,
-                'longitude' => 107.5413683,
-            ],
-            'Sparing04' => [
-                'table' => 'sparing04',
-                'title' => 'Indorama PDL',
-                'latitude' => -6.8953855,
-                'longitude' => 107.4959834,
-            ],
-            'Sparing05' => [
-                'table' => 'sparing05',
-                'title' => 'Besland',
-                'latitude' => -6.4493131,
-                'longitude' => 107.4572677,
-            ],
-            'Sparing06' => [
-                'table' => 'sparing06',
-                'title' => 'Indotaisei',
-                'latitude' => -6.4244492,
-                'longitude' =>107.4187869,
-            ],
-            'Sparing07' => [
-                'table' => 'sparing07',
-                'title' => 'Daliatex',
-                'latitude' => -6.9801221,
-                'longitude' => 107.6185288,
-            ],
-            'Sparing08' => [
-                'table' => 'sparing08',
-                'title' => 'Papyrus',
-                'latitude' => -7.0384787,
-                'longitude' => 107.5906626,
-            ],
-            'Sparing09' => [
-                'table' => 'sparing09',
-                'title' => 'BCP',
-                'latitude' => -7.0465691,
-                'longitude' => 107.7506977,
-            ],
-            'Sparing10' => [
-                'table' => 'sparing10',
-                'title' => 'Pangjaya',
-                'latitude' => -6.5671703,
-                'longitude' => 106.5889997,
-            ],
-            
-            // Tambahkan informasi untuk Sparing02, Sparing03, dan seterusnya
-        ];
+        $devices = BaseSparing::getDevices();
+
 
         $main = []; 
         foreach ($devices as $modelName => $deviceInfo) {
