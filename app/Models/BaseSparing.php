@@ -134,8 +134,8 @@ class BaseSparing extends Model
             'Sparing10' => [
                 'table' => 'sparing10',
                 'title' => 'Pangjaya',
-                'latitude' => -6.5671703,
-                'longitude' => 106.5889997,
+                'latitude' => -6.9011245,
+                'longitude' => 107.4633001,
             ],
         ];
     });
