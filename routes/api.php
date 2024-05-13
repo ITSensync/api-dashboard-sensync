@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SparingController;
 use App\Http\Controllers\GetDataController;
+use App\Http\Controllers\DataCountController;
 
 
 /*
@@ -25,4 +26,5 @@ use App\Http\Controllers\GetDataController;
     // Route::get('sparing/status/{id_device}', [SparingController::class, 'status']);
     Route::get('sparing/data', [GetDataController::class, 'getData']);
     Route::get('sparing/mutu', [GetDataController::class, 'getDataMutu']);
+    Route::get('sparing/data-count', [GetDataController::class, 'getCountData']);
 
