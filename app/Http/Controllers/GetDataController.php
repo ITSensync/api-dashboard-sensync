@@ -26,7 +26,7 @@ class GetDataController extends Controller
         $devices = BaseSparing::getDevices();
 
 
-        $main = []; 
+        $main = [];
         foreach ($devices as $modelName => $deviceInfo) {
             $model = "App\\Models\\$modelName";
             $data = $model::getDataForDashboard($deviceInfo['table'], $deviceInfo['title'], $deviceInfo['latitude'], $deviceInfo['longitude']);
@@ -97,7 +97,7 @@ class GetDataController extends Controller
     }
 
 
-    public function getCountData () 
+    public function getCountData()
     {
         $totalExpectedData = 5040;
         $data = [
@@ -117,7 +117,7 @@ class GetDataController extends Controller
                 'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y'),
                 'percent' => $this->calculatePercentage(Sparing02::where('time', '>=', now()->subWeek())->count(), $totalExpectedData)
             ],
-          
+
             [
                 'uuid' => Str::uuid(),
                 'id' => 'sparing03',
@@ -196,6 +196,9 @@ class GetDataController extends Controller
             'message' => 'Success',
             'data' => $data
         ]);
-    
+    }
+    private function calculatePercentage($count, $totalExpected)
+    {
+        return $totalExpected != 0 ? ($count / $totalExpected) * 100 : 0;
     }
 }
