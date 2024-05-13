@@ -99,20 +99,23 @@ class GetDataController extends Controller
 
     public function getCountData () 
     {
+        $totalExpectedData = 5040;
         $data = [
             [
                 'uuid' => Str::uuid(),
                 'id' => 'sparing01',
                 'title' => 'gistex',
                 'data_count' => Sparing01::where('time', '>=', now()->subWeek())->count(),
-                'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y')
+                'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y'),
+                'percent' => $this->calculatePercentage(Sparing01::where('time', '>=', now()->subWeek())->count(), $totalExpectedData)
             ],
             [
                 'uuid' => Str::uuid(),
                 'id' => 'sparing02',
                 'title' => 'indorama PWK',
                 'data_count' => Sparing02::where('time', '>=', now()->subWeek())->count(),
-                'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y')
+                'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y'),
+                'percent' => $this->calculatePercentage(Sparing02::where('time', '>=', now()->subWeek())->count(), $totalExpectedData)
             ],
           
             [
@@ -120,63 +123,72 @@ class GetDataController extends Controller
                 'id' => 'sparing03',
                 'title' => 'PMT',
                 'data_count' => Sparing03::where('time', '>=', now()->subWeek())->count(),
-                'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y')
+                'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y'),
+                'percent' => $this->calculatePercentage(Sparing03::where('time', '>=', now()->subWeek())->count(), $totalExpectedData)
             ],
             [
                 'uuid' => Str::uuid(),
                 'id' => 'sparing04',
                 'title' => 'indorama PDL',
                 'data_count' => Sparing04::where('time', '>=', now()->subWeek())->count(),
-                'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y')
+                'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y'),
+                'percent' => $this->calculatePercentage(Sparing04::where('time', '>=', now()->subWeek())->count(), $totalExpectedData)
             ],
             [
                 'uuid' => Str::uuid(),
                 'id' => 'sparing05',
                 'title' => 'Besland',
                 'data_count' => Sparing05::where('time', '>=', now()->subWeek())->count(),
-                'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y')
+                'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y'),
+                'percent' => $this->calculatePercentage(Sparing05::where('time', '>=', now()->subWeek())->count(), $totalExpectedData)
             ],
             [
                 'uuid' => Str::uuid(),
                 'id' => 'sparing06',
                 'title' => 'Indotaisei',
                 'data_count' => Sparing06::where('time', '>=', now()->subWeek())->count(),
-                'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y')
+                'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y'),
+                'percent' => $this->calculatePercentage(Sparing06::where('time', '>=', now()->subWeek())->count(), $totalExpectedData)
             ],
             [
                 'uuid' => Str::uuid(),
                 'id' => 'sparing07',
                 'title' => 'Daliatex',
                 'data_count' => Sparing07::where('time', '>=', now()->subWeek())->count(),
-                'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y')
+                'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y'),
+                'percent' => $this->calculatePercentage(Sparing07::where('time', '>=', now()->subWeek())->count(), $totalExpectedData)
             ],
             [
                 'uuid' => Str::uuid(),
                 'id' => 'sparing08',
                 'title' => 'Papyrus',
                 'data_count' => Sparing08::where('time', '>=', now()->subWeek())->count(),
-                'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y')
+                'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y'),
+                'percent' => $this->calculatePercentage(Sparing08::where('time', '>=', now()->subWeek())->count(), $totalExpectedData)
             ],
             [
                 'uuid' => Str::uuid(),
                 'id' => 'sparing09',
                 'title' => 'BCP',
                 'data_count' => Sparing09::where('time', '>=', now()->subWeek())->count(),
-                'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y')
+                'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y'),
+                'percent' => $this->calculatePercentage(Sparing09::where('time', '>=', now()->subWeek())->count(), $totalExpectedData)
             ],
             [
                 'uuid' => Str::uuid(),
                 'id' => 'sparing10',
                 'title' => 'Pangjaya',
                 'data_count' => Sparing10::where('time', '>=', now()->subWeek())->count(),
-                'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y')
+                'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y'),
+                'percent' => $this->calculatePercentage(Sparing10::where('time', '>=', now()->subWeek())->count(), $totalExpectedData)
             ],
             [
                 'uuid' => Str::uuid(),
                 'id' => 'sparing11',
                 'title' => 'LPA',
                 'data_count' => Sparing11::where('time', '>=', now()->subWeek())->count(),
-                'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y')
+                'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y'),
+                'percent' => $this->calculatePercentage(Sparing11::where('time', '>=', now()->subWeek())->count(), $totalExpectedData)
             ],
         ];
         return response()->json([
