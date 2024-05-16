@@ -234,21 +234,21 @@ class GetDataController extends Controller
         $query = "
         SELECT 
             year_week,
-            MIN(time) AS start_date,
-            MAX(time) AS end_date,
+            MIN(start_date) AS start_date,
+            MAX(end_date) AS end_date,
             COUNT(*) AS total_records
         FROM (
             SELECT 
                 YEARWEEK(time, 1) AS year_week,
-                time
+                MIN(time) AS start_date,
+                MAX(time) AS end_date
             FROM $id
             WHERE 
                 (YEAR(time) = 2024 AND MONTH(time) = 5) OR
                 (YEAR(time) > 2024 AND MONTH(time) >= 5) 
-                AND WEEKDAY(time) BETWEEN 0 AND 6 AND
-                time >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+                AND WEEKDAY(time) BETWEEN 0 AND 6
+            GROUP BY year_week
         ) AS subquery
-        GROUP BY year_week
         ORDER BY year_week;
         ";
     
@@ -283,6 +283,7 @@ class GetDataController extends Controller
             'data' => $data
         ]);
     }
+    
     
     
 }
