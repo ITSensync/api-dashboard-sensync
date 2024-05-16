@@ -240,10 +240,10 @@ class GetDataController extends Controller
             COUNT(*) AS total_records
         FROM $id
         WHERE time >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
-        AND MONTH(MIN(time)) != MONTH(MAX(time))
+          AND MONTH(MIN(time)) != MONTH(MAX(time))
         GROUP BY year_week
         ORDER BY year_week;
-    ";
+        ";
 
         $results = DB::select(DB::raw($query));
 
