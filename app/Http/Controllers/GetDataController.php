@@ -239,7 +239,7 @@ class GetDataController extends Controller
         FROM $id
         WHERE time >= DATE_SUB(CURDATE(), INTERVAL (DAYOFWEEK(CURDATE()) - 2) DAY)
           AND time < DATE_ADD(CURDATE(), INTERVAL (8 - DAYOFWEEK(CURDATE())) DAY)
-        GROUP BY interval_date
+        GROUP BY interval_date, time
         ORDER BY time;
     ";
 
