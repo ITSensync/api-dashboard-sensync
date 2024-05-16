@@ -203,7 +203,7 @@ class GetDataController extends Controller
     }
 
 
-    public function getWeeklyDataById ($id) 
+    public function getWeeklyDataById($id)
     {
         $validIds = [
             'sparing01' => 'Gistex',
@@ -233,16 +233,16 @@ class GetDataController extends Controller
         $title = $validIds[$id];
 
         $query = "
-            SELECT 
-                WEEK(time, 1) - WEEK(DATE_SUB(time, INTERVAL DAYOFMONTH(time) - 1 DAY), 1) + 1 AS week_in_month,
-                MIN(time) AS start_date,
-                MAX(time) AS end_date,
-                COUNT(*) AS total_records
-            FROM $id
-            WHERE MONTH(time) = MONTH(CURDATE()) AND YEAR(time) = YEAR(CURDATE())
-            GROUP BY week_in_month
-            ORDER BY week_in_month;
-        ";
+        SELECT 
+            WEEK(time, 1) - WEEK(DATE_SUB(time, INTERVAL DAYOFMONTH(time) - 1 DAY), 1) + 1 AS week_in_month,
+            DATE_FORMAT(MIN(time), '%d/%m/%Y') AS start_date,
+            DATE_FORMAT(MAX(time), '%d/%m/%Y') AS end_date,
+            COUNT(*) AS total_records
+        FROM $id
+        WHERE MONTH(time) = MONTH(CURDATE()) AND YEAR(time) = YEAR(CURDATE())
+        GROUP BY week_in_month
+        ORDER BY week_in_month;
+    ";
 
         $results = DB::select(DB::raw($query));
 
@@ -251,7 +251,7 @@ class GetDataController extends Controller
         foreach ($results as $result) {
             $interval_date = date('d/m/Y', strtotime($result->start_date)) . ' - ' . date('d/m/Y', strtotime($result->end_date));
             $data_count = $result->total_records;
-            
+
             // Hitung persentase
             $expected_count = 5040;
             $percent = ($data_count / $expected_count) * 100;
