@@ -249,7 +249,7 @@ class GetDataController extends Controller
         // Format output JSON
         $data = [];
         foreach ($results as $result) {
-            $interval_date = date('d/m/Y', strtotime($result->start_date)) . ' - ' . date('d/m/Y', strtotime($result->end_date));
+            $interval_date = $result->start_date . ' - ' . $result->end_date;
             $data_count = $result->total_records;
 
             // Hitung persentase
