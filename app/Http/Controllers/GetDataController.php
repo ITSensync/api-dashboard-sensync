@@ -249,6 +249,7 @@ class GetDataController extends Controller
                 AND WEEKDAY(time) BETWEEN 0 AND 6
             GROUP BY YEARWEEK(time, 1) /* Menambahkan year_week ke dalam GROUP BY */
         ) AS subquery
+        GROUP BY year_week /* Mengelompokkan berdasarkan year_week di luar subquery */
         ORDER BY year_week;
         ";
     
