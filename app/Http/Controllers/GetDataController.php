@@ -17,6 +17,7 @@ use App\Models\BaseSparing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class GetDataController extends Controller
 {
@@ -204,38 +205,38 @@ class GetDataController extends Controller
 
 
     public function getWeeklyDataById($id)
-{
-    $validIds = [
-        'sparing01' => 'Gistex',
-        'sparing02' => 'Indorama PWK',
-        'sparing03' => 'PMT',
-        'sparing04' => 'Indorama PDL',
-        'sparing05' => 'Besland',
-        'sparing06' => 'Indotaisei',
-        'sparing07' => 'Daliatex',
-        'sparing08' => 'Papyrus',
-        'sparing09' => 'BCP',
-        'sparing10' => 'Pangjaya',
-        'sparing11' => 'LPA',
-        'weaving01' => 'weaving01',
-        'weaving02' => 'weaving02',
-        'spinning' => 'spinning',
-    ];
+    {
+        $validIds = [
+            'sparing01' => 'Gistex',
+            'sparing02' => 'Indorama PWK',
+            'sparing03' => 'PMT',
+            'sparing04' => 'Indorama PDL',
+            'sparing05' => 'Besland',
+            'sparing06' => 'Indotaisei',
+            'sparing07' => 'Daliatex',
+            'sparing08' => 'Papyrus',
+            'sparing09' => 'BCP',
+            'sparing10' => 'Pangjaya',
+            'sparing11' => 'LPA',
+            'weaving01' => 'weaving01',
+            'weaving02' => 'weaving02',
+            'spinning' => 'spinning',
+        ];
 
-    if (!array_key_exists($id, $validIds)) {
-        return response()->json([
-            'status' => 'Error',
-            'message' => 'Invalid ID Provider'
-        ], 400);
-    }
+        if (!array_key_exists($id, $validIds)) {
+            return response()->json([
+                'status' => 'Error',
+                'message' => 'Invalid ID Provider'
+            ], 400);
+        }
 
-    $title = $validIds[$id];
+        $title = $validIds[$id];
 
-    // Calculate the current week's start and end dates (Monday-Sunday)
-    $currentWeekStart = (new DateTime('last monday'))->format('Y-m-d');
-    $currentWeekEnd = (new DateTime())->modify('next sunday')->format('Y-m-d');
+        // Calculate the current week's start and end dates (Monday-Sunday)
+        $currentWeekStart = Carbon::now()->startOfWeek()->format('Y-m-d');
+        $currentWeekEnd = Carbon::now()->endOfWeek()->format('Y-m-d');
 
-    $query = "
+        $query = "
         SELECT
             WEEK(time, 1) AS week_in_year,
             MIN(time) AS start_date,
@@ -247,34 +248,34 @@ class GetDataController extends Controller
         ORDER BY week_in_year;
     ";
 
-    $results = DB::select(DB::raw($query));
+        $results = DB::select(DB::raw($query));
 
-    $data = [];
-    foreach ($results as $result) {
-        $interval_date = date('d/m/Y', strtotime($result->start_date)) . ' - ' . date('d/m/Y', strtotime($result->end_date));
-        $data_count = $result->total_records;
+        $data = [];
+        foreach ($results as $result) {
+            $interval_date = date('d/m/Y', strtotime($result->start_date)) . ' - ' . date('d/m/Y', strtotime($result->end_date));
+            $data_count = $result->total_records;
 
-        // Hitung persentase (same calculation as before)
-        $expected_count = 5040;
-        $percent = ($data_count / $expected_count) * 100;
-        if ($percent > 100) {
-            $percent = 100;
+            // Hitung persentase (same calculation as before)
+            $expected_count = 5040;
+            $percent = ($data_count / $expected_count) * 100;
+            if ($percent > 100) {
+                $percent = 100;
+            }
+            $percent = number_format($percent, 2);
+
+            $data[] = [
+                'interval_date' => $interval_date,
+                'data_count' => $data_count,
+                'percent' => $percent
+            ];
         }
-        $percent = number_format($percent, 2);
 
-        $data[] = [
-            'interval_date' => $interval_date,
-            'data_count' => $data_count,
-            'percent' => $percent
-        ];
+        return response()->json([
+            'status' => 'OK',
+            'message' => 'Success',
+            'id' => $id,
+            'title' => $title,
+            'data' => $data
+        ]);
     }
-
-    return response()->json([
-        'status' => 'OK',
-        'message' => 'Success',
-        'id' => $id,
-        'title' => $title,
-        'data' => $data
-    ]);
-}
 }
