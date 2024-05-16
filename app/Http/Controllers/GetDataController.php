@@ -233,23 +233,21 @@ class GetDataController extends Controller
         $title = $validIds[$id];
 
         $query = "
+        SELECT 
+            year_week,
+            MIN(time) AS start_date,
+            MAX(time) AS end_date,
+            COUNT(*) AS total_records
+        FROM (
             SELECT 
                 YEARWEEK(time, 1) AS year_week,
-                MIN(time) AS start_date,
-                MAX(time) AS end_date,
-                COUNT(*) AS total_records
+                time
             FROM $id
             WHERE time >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
-              AND YEARWEEK(time, 1) IN (
-                  SELECT YEARWEEK(time, 1)
-                  FROM $id
-                  WHERE time >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
-                  GROUP BY YEARWEEK(time, 1)
-                  HAVING MONTH(MIN(time)) != MONTH(MAX(time))
-              )
-            GROUP BY year_week
-            ORDER BY year_week;
-        ";
+        ) AS subquery
+        GROUP BY year_week
+        ORDER BY year_week;
+    ";
 
         $results = DB::select(DB::raw($query));
 
