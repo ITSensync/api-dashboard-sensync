@@ -201,4 +201,58 @@ class GetDataController extends Controller
     {
         return $totalExpected != 0 ? ($count / $totalExpected) * 100 : 0;
     }
+
+
+    public function getWeeklyDataById ($id) 
+    {
+        if (!in_array($id, ['sparing01','sparing02','sparing03','sparing04','sparing05','sparing06','sparing07','sparing08','sparing09','sparing10','sparing11'])) {
+            return response()->json([
+                'status'=> 'Error',
+                'message' => 'Invalid ID provider'
+            ], 400);
+        }
+
+        $query = "
+            SELECT 
+                WEEK(time, 1) - WEEK(DATE_SUB(time, INTERVAL DAYOFMONTH(time) - 1 DAY), 1) + 1 AS week_in_month,
+                MIN(time) AS start_date,
+                MAX(time) AS end_date,
+                COUNT(*) AS total_records
+            FROM $id
+            WHERE MONTH(time) = MONTH(CURDATE()) AND YEAR(time) = YEAR(CURDATE())
+            GROUP BY week_in_month
+            ORDER BY week_in_month;
+        ";
+
+        $results = DB::select(DB::raw($query));
+
+        // Format output JSON
+        $data = [];
+        foreach ($results as $result) {
+            $interval_date = date('d/m/Y', strtotime($result->start_date)) . ' - ' . date('d/m/Y', strtotime($result->end_date));
+            $data_count = $result->total_records;
+            
+            // Hitung persentase
+            $expected_count = 5040;
+            $percent = ($data_count / $expected_count) * 100;
+            if ($percent > 100) {
+                $percent = 100;
+            }
+            $percent = number_format($percent, 2);
+
+            $data[] = [
+                'interval_date' => $interval_date,
+                'data_count' => $data_count,
+                'percent' => $percent
+            ];
+        }
+
+        return response()->json([
+            'status' => 'OK',
+            'message' => 'Success',
+            'id' => $id,
+            'title' => 'gistex', // Sesuaikan dengan nilai yang sesuai
+            'data' => $data
+        ]);
+    }
 }
