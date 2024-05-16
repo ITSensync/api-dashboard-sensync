@@ -221,42 +221,43 @@ class GetDataController extends Controller
             'weaving02' => 'weaving02',
             'spinning' => 'spinning',
         ];
-
+    
         if (!array_key_exists($id, $validIds)) {
             return response()->json([
                 'status' => 'Error',
                 'message' => 'Invalid ID Provider'
             ], 400);
         }
-
-
+    
         $title = $validIds[$id];
-
+    
         $query = "
-        SELECT 
-            year_week,
-            MIN(time) AS start_date,
-            MAX(time) AS end_date,
-            COUNT(*) AS total_records
-        FROM (
             SELECT 
-                YEARWEEK(time, 1) AS year_week,
-                time
-            FROM $id
-            WHERE time >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
-        ) AS subquery
-        GROUP BY year_week
-        ORDER BY year_week;
-    ";
-
+                year_week,
+                MIN(time) AS start_date,
+                MAX(time) AS end_date,
+                COUNT(*) AS total_records
+            FROM (
+                SELECT 
+                    YEARWEEK(time, 1) AS year_week,
+                    time
+                FROM $id
+                WHERE 
+                    time >= DATE_FORMAT(NOW(), '%Y-%m-01') - INTERVAL 1 MONTH
+                    AND time < DATE_FORMAT(NOW(), '%Y-%m-01')
+            ) AS subquery
+            GROUP BY year_week
+            ORDER BY year_week;
+        ";
+    
         $results = DB::select(DB::raw($query));
-
+    
         // Format output JSON
         $data = [];
         foreach ($results as $result) {
             $interval_date = date('d/m/Y', strtotime($result->start_date)) . ' - ' . date('d/m/Y', strtotime($result->end_date));
             $data_count = $result->total_records;
-
+    
             // Hitung persentase
             $expected_count = 5040;
             $percent = ($data_count / $expected_count) * 100;
@@ -264,14 +265,14 @@ class GetDataController extends Controller
                 $percent = 100;
             }
             $percent = number_format($percent, 2);
-
+    
             $data[] = [
                 'interval_date' => $interval_date,
                 'data_count' => $data_count,
                 'percent' => $percent
             ];
         }
-
+    
         return response()->json([
             'status' => 'OK',
             'message' => 'Success',
