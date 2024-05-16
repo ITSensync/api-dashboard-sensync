@@ -231,10 +231,6 @@ class GetDataController extends Controller
     
         $title = $validIds[$id];
     
-        // Get current month and previous month
-        $currentMonth = date('m');
-        $previousMonth = date('m', strtotime('-1 month'));
-    
         $query = "
         SELECT 
             year_week,
@@ -247,8 +243,10 @@ class GetDataController extends Controller
                 time
             FROM $id
             WHERE 
-                (MONTH(time) = $currentMonth OR MONTH(time) = $previousMonth) AND
-                WEEKDAY(time) >= 0 AND WEEKDAY(time) <= 6
+                (YEAR(time) = 2024 AND MONTH(time) = 5) OR
+                (YEAR(time) > 2024 AND MONTH(time) >= 5) 
+                AND WEEKDAY(time) BETWEEN 0 AND 6 AND
+                time >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
         ) AS subquery
         GROUP BY year_week
         ORDER BY year_week;
@@ -285,5 +283,6 @@ class GetDataController extends Controller
             'data' => $data
         ]);
     }
+    
     
 }
