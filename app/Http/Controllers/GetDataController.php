@@ -231,23 +231,27 @@ class GetDataController extends Controller
     
         $title = $validIds[$id];
     
+        // Get current month and previous month
+        $currentMonth = date('m');
+        $previousMonth = date('m', strtotime('-1 month'));
+    
         $query = "
+        SELECT 
+            year_week,
+            MIN(time) AS start_date,
+            MAX(time) AS end_date,
+            COUNT(*) AS total_records
+        FROM (
             SELECT 
-                year_week,
-                MIN(time) AS start_date,
-                MAX(time) AS end_date,
-                COUNT(*) AS total_records
-            FROM (
-                SELECT 
-                    YEARWEEK(time, 1) AS year_week,
-                    time
-                FROM $id
-                WHERE 
-                    time >= DATE_FORMAT(NOW(), '%Y-%m-01') - INTERVAL 1 MONTH
-                    AND time < DATE_FORMAT(NOW(), '%Y-%m-01')
-            ) AS subquery
-            GROUP BY year_week
-            ORDER BY year_week;
+                YEARWEEK(time, 1) AS year_week,
+                time
+            FROM $id
+            WHERE 
+                (MONTH(time) = $currentMonth OR MONTH(time) = $previousMonth) AND
+                WEEKDAY(time) >= 0 AND WEEKDAY(time) <= 6
+        ) AS subquery
+        GROUP BY year_week
+        ORDER BY year_week;
         ";
     
         $results = DB::select(DB::raw($query));
@@ -281,4 +285,5 @@ class GetDataController extends Controller
             'data' => $data
         ]);
     }
+    
 }
