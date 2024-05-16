@@ -204,77 +204,81 @@ class GetDataController extends Controller
 
 
     public function getWeeklyDataById($id)
-    {
-        $validIds = [
-            'sparing01' => 'Gistex',
-            'sparing02' => 'Indorama PWK',
-            'sparing03' => 'PMT',
-            'sparing04' => 'Indorama PDL',
-            'sparing05' => 'Besland',
-            'sparing06' => 'Indotaisei',
-            'sparing07' => 'Daliatex',
-            'sparing08' => 'Papyrus',
-            'sparing09' => 'BCP',
-            'sparing10' => 'Pangjaya',
-            'sparing11' => 'LPA',
-            'weaving01' => 'weaving01',
-            'weaving02' => 'weaving02',
-            'spinning' => 'spinning',
-        ];
-    
-        if (!array_key_exists($id, $validIds)) {
-            return response()->json([
-                'status' => 'Error',
-                'message' => 'Invalid ID Provider'
-            ], 400);
-        }
-    
-        $title = $validIds[$id];
-        $query = "
-            SELECT 
-                WEEK(time, 1) AS week,
-                YEAR(time) AS year,
-                MIN(time) AS start_date,
-                MAX(time) AS end_date,
-                COUNT(*) AS total_records
-            FROM $id
-            WHERE MONTH(time) = MONTH(CURDATE()) AND YEAR(time) = YEAR(CURDATE())
-            GROUP BY week, year
-            ORDER BY week;
-        ";
-    
-        $results = DB::select(DB::raw($query));
-    
-        // Format output JSON
-        $data = [];
-        foreach ($results as $result) {
-            $interval_date = date('d M', strtotime($result->start_date)) . ' - ' . date('d M', strtotime($result->end_date));
-            $data_count = $result->total_records;
-    
-            // Hitung persentase
-            $expected_count = 5040;
-            $percent = ($data_count / $expected_count) * 100;
-            if ($percent > 100) {
-                $percent = 100;
-            }
-            $percent = number_format($percent, 2);
-    
-            $data[] = [
-                'week' => $result->week,
-                'year' => $result->year,
-                'interval_date' => $interval_date,
-                'data_count' => $data_count,
-                'percent' => $percent
-            ];
-        }
-    
+{
+    $validIds = [
+        'sparing01' => 'Gistex',
+        'sparing02' => 'Indorama PWK',
+        'sparing03' => 'PMT',
+        'sparing04' => 'Indorama PDL',
+        'sparing05' => 'Besland',
+        'sparing06' => 'Indotaisei',
+        'sparing07' => 'Daliatex',
+        'sparing08' => 'Papyrus',
+        'sparing09' => 'BCP',
+        'sparing10' => 'Pangjaya',
+        'sparing11' => 'LPA',
+        'weaving01' => 'weaving01',
+        'weaving02' => 'weaving02',
+        'spinning' => 'spinning',
+    ];
+
+    if (!array_key_exists($id, $validIds)) {
         return response()->json([
-            'status' => 'OK',
-            'message' => 'Success',
-            'id' => $id,
-            'title' => $title,
-            'data' => $data
-        ]);
+            'status' => 'Error',
+            'message' => 'Invalid ID Provider'
+        ], 400);
     }
+
+    $title = $validIds[$id];
+    $query = "
+        SELECT 
+            WEEK(time, 1) AS week,
+            YEAR(time) AS year,
+            MIN(time) AS start_date,
+            MAX(time) AS end_date,
+            COUNT(*) AS total_records
+        FROM $id
+        WHERE MONTH(time) = MONTH(CURDATE()) AND YEAR(time) = YEAR(CURDATE())
+        GROUP BY week, year
+        ORDER BY week;
+    ";
+
+    $results = DB::select(DB::raw($query));
+
+    // Format output JSON
+    $data = [];
+    foreach ($results as $result) {
+        $interval_date = date('d M', strtotime($result->start_date)) . ' - ' . date('d M', strtotime($result->end_date));
+        $data_count = $result->total_records;
+
+        // Hitung persentase
+        $expected_count = 5040;
+        $percent = ($data_count / $expected_count) * 100;
+        if ($percent > 100) {
+            $percent = 100;
+        }
+        $percent = number_format($percent, 2);
+
+        // Perbaiki logika perhitungan minggu
+        $week_in_month = ceil(date('d', strtotime($result->start_date)) / 7);
+
+        $data[] = [
+            'week' => $week_in_month,
+            'year' => $result->year,
+            'interval_date' => $interval_date,
+            'data_count' => $data_count,
+            'percent' => $percent
+        ];
+    }
+
+    return response()->json([
+        'status' => 'OK',
+        'message' => 'Success',
+        'id' => $id,
+        'title' => $title,
+        'data' => $data
+    ]);
+}
+
     
 }
