@@ -205,12 +205,32 @@ class GetDataController extends Controller
 
     public function getWeeklyDataById ($id) 
     {
-        if (!in_array($id, ['sparing01','sparing02','sparing03','sparing04','sparing05','sparing06','sparing07','sparing08','sparing09','sparing10','sparing11'])) {
+        $validIds = [
+            'sparing01' => 'Gistex',
+            'sparing02' => 'Indorama PWK',
+            'sparing03' => 'PMT',
+            'sparing04' => 'Indorama PDL',
+            'sparing05' => 'Besland',
+            'sparing06' => 'Indotaisei',
+            'sparing07' => 'Daliatex',
+            'sparing08' => 'Papyrus',
+            'sparing09' => 'BCP',
+            'sparing10' => 'Pangjaya',
+            'sparing11' => 'LPA',
+            'weaving01' => 'weaving01',
+            'weaving02' => 'weaving02',
+            'spinning' => 'spinning',
+        ];
+
+        if (!array_key_exists($id, $validIds)) {
             return response()->json([
-                'status'=> 'Error',
-                'message' => 'Invalid ID provider'
+                'status' => 'Error',
+                'message' => 'Invalid ID Provider'
             ], 400);
         }
+
+
+        $title = $validIds[$id];
 
         $query = "
             SELECT 
@@ -251,7 +271,7 @@ class GetDataController extends Controller
             'status' => 'OK',
             'message' => 'Success',
             'id' => $id,
-            'title' => 'gistex', // Sesuaikan dengan nilai yang sesuai
+            'title' => $title, // Sesuaikan dengan nilai yang sesuai
             'data' => $data
         ]);
     }
