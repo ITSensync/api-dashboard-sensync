@@ -234,45 +234,45 @@ class GetDataController extends Controller
 
         $query = "
         SELECT 
-            WEEK(time, 1) - WEEK(DATE_SUB(time, INTERVAL DAYOFMONTH(time) - 1 DAY), 1) + 1 AS week_in_month,
-            DATE_FORMAT(MIN(time), '%d/%m/%Y') AS start_date,
-            DATE_FORMAT(MAX(time), '%d/%m/%Y') AS end_date,
+            YEARWEEK(time, 1) AS year_week,
+            MIN(time) AS start_date,
+            MAX(time) AS end_date,
             COUNT(*) AS total_records
         FROM $id
-        WHERE MONTH(time) = MONTH(CURDATE()) AND YEAR(time) = YEAR(CURDATE())
-        GROUP BY week_in_month
-        ORDER BY week_in_month;
+        WHERE time >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+        GROUP BY year_week
+        ORDER BY year_week;
     ";
 
-        $results = DB::select(DB::raw($query));
+    $results = DB::select(DB::raw($query));
 
-        // Format output JSON
-        $data = [];
-        foreach ($results as $result) {
-            $interval_date = $result->start_date . ' - ' . $result->end_date;
-            $data_count = $result->total_records;
-
-            // Hitung persentase
-            $expected_count = 5040;
-            $percent = ($data_count / $expected_count) * 100;
-            if ($percent > 100) {
-                $percent = 100;
-            }
-            $percent = number_format($percent, 2);
-
-            $data[] = [
-                'interval_date' => $interval_date,
-                'data_count' => $data_count,
-                'percent' => $percent
-            ];
+    // Format output JSON
+    $data = [];
+    foreach ($results as $result) {
+        $interval_date = date('d/m/Y', strtotime($result->start_date)) . ' - ' . date('d/m/Y', strtotime($result->end_date));
+        $data_count = $result->total_records;
+        
+        // Hitung persentase
+        $expected_count = 5040;
+        $percent = ($data_count / $expected_count) * 100;
+        if ($percent > 100) {
+            $percent = 100;
         }
+        $percent = number_format($percent, 2);
 
-        return response()->json([
-            'status' => 'OK',
-            'message' => 'Success',
-            'id' => $id,
-            'title' => $title, // Sesuaikan dengan nilai yang sesuai
-            'data' => $data
-        ]);
+        $data[] = [
+            'interval_date' => $interval_date,
+            'data_count' => $data_count,
+            'percent' => $percent
+        ];
     }
+
+    return response()->json([
+        'status' => 'OK',
+        'message' => 'Success',
+        'id' => $id,
+        'title' => $title,
+        'data' => $data
+    ]);
+}
 }
