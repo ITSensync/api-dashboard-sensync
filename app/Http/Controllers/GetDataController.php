@@ -247,7 +247,7 @@ class GetDataController extends Controller
                 (YEAR(time) = 2024 AND MONTH(time) = 5) OR
                 (YEAR(time) > 2024 AND MONTH(time) >= 5) 
                 AND WEEKDAY(time) BETWEEN 0 AND 6
-            GROUP BY year_week
+            GROUP BY YEARWEEK(time, 1) /* Menambahkan year_week ke dalam GROUP BY */
         ) AS subquery
         ORDER BY year_week;
         ";
