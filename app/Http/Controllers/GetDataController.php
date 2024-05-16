@@ -17,7 +17,6 @@ use App\Models\BaseSparing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Carbon\Carbon;
 
 class GetDataController extends Controller
 {
@@ -231,42 +230,28 @@ class GetDataController extends Controller
         }
 
         $title = $validIds[$id];
-
-        // Calculate the current week's start and end dates (Monday-Sunday)
-        $currentWeekStart = Carbon::now()->startOfWeek()->format('Y-m-d');
-        $currentWeekEnd = Carbon::now()->endOfWeek()->format('Y-m-d');
-
         $query = "
-        SELECT
-            WEEK(time, 1) AS week_in_year,
-            MIN(time) AS start_date,
-            MAX(time) AS end_date,
-            COUNT(*) AS total_records
+        SELECT 
+            CONCAT(DATE_FORMAT(DATE_SUB(time, INTERVAL (DAYOFWEEK(time) - 2) DAY), '%d/%m/%Y'), ' - ', 
+                   DATE_FORMAT(DATE_SUB(time, INTERVAL (DAYOFWEEK(time) - 6) DAY), '%d/%m/%Y')) AS interval_date,
+            COUNT(*) AS data_count,
+            ROUND((COUNT(*) / 5040) * 100, 2) AS percent
         FROM $id
-        WHERE time BETWEEN '$currentWeekStart' AND '$currentWeekEnd'
-        GROUP BY week_in_year
-        ORDER BY week_in_year;
+        WHERE time >= DATE_SUB(CURDATE(), INTERVAL (DAYOFWEEK(CURDATE()) - 2) DAY)
+          AND time < DATE_ADD(CURDATE(), INTERVAL (8 - DAYOFWEEK(CURDATE())) DAY)
+        GROUP BY interval_date
+        ORDER BY time;
     ";
 
         $results = DB::select(DB::raw($query));
 
+        // Format output JSON
         $data = [];
         foreach ($results as $result) {
-            $interval_date = date('d/m/Y', strtotime($result->start_date)) . ' - ' . date('d/m/Y', strtotime($result->end_date));
-            $data_count = $result->total_records;
-
-            // Hitung persentase (same calculation as before)
-            $expected_count = 5040;
-            $percent = ($data_count / $expected_count) * 100;
-            if ($percent > 100) {
-                $percent = 100;
-            }
-            $percent = number_format($percent, 2);
-
             $data[] = [
-                'interval_date' => $interval_date,
-                'data_count' => $data_count,
-                'percent' => $percent
+                'interval_date' => $result->interval_date,
+                'data_count' => $result->data_count,
+                'percent' => $result->percent
             ];
         }
 
