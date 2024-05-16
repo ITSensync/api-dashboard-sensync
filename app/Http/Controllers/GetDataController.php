@@ -203,7 +203,7 @@ class GetDataController extends Controller
     }
 
 
-    public function getWeeklyDataById($id)
+    public function getWeeklyDataById ($id) 
     {
         $validIds = [
             'sparing01' => 'Gistex',
@@ -229,29 +229,40 @@ class GetDataController extends Controller
             ], 400);
         }
 
-        $title = $validIds[$id];
+
+            $title = $validIds[$id];
         $query = "
-        SELECT 
-            CONCAT(DATE_FORMAT(DATE_SUB(time, INTERVAL (DAYOFWEEK(time) - 2) DAY), '%d/%m/%Y'), ' - ', 
-                   DATE_FORMAT(DATE_SUB(time, INTERVAL (DAYOFWEEK(time) - 6) DAY), '%d/%m/%Y')) AS interval_date,
-            COUNT(*) AS data_count,
-            ROUND((COUNT(*) / 5040) * 100, 2) AS percent
-        FROM $id
-        WHERE time >= DATE_SUB(CURDATE(), INTERVAL (DAYOFWEEK(CURDATE()) - 2) DAY)
-          AND time < DATE_ADD(CURDATE(), INTERVAL (8 - DAYOFWEEK(CURDATE())) DAY)
-        GROUP BY interval_date, time
-        ORDER BY time;
-    ";
+            SELECT 
+                WEEK(time, 1) - WEEK(DATE_SUB(time, INTERVAL DAYOFMONTH(time) - 1 DAY), 1) + 1 AS week_in_month,
+                MIN(time) AS start_date,
+                MAX(time) AS end_date,
+                COUNT(*) AS total_records
+            FROM $id
+            WHERE MONTH(time) = MONTH(CURDATE()) AND YEAR(time) = YEAR(CURDATE())
+            GROUP BY week_in_month
+            ORDER BY week_in_month;
+        ";
 
         $results = DB::select(DB::raw($query));
 
         // Format output JSON
         $data = [];
         foreach ($results as $result) {
+            $interval_date = date('d/m/Y', strtotime($result->start_date)) . ' - ' . date('d/m/Y', strtotime($result->end_date));
+            $data_count = $result->total_records;
+            
+            // Hitung persentase
+            $expected_count = 5040;
+            $percent = ($data_count / $expected_count) * 100;
+            if ($percent > 100) {
+                $percent = 100;
+            }
+            $percent = number_format($percent, 2);
+
             $data[] = [
-                'interval_date' => $result->interval_date,
-                'data_count' => $result->data_count,
-                'percent' => $result->percent
+                'interval_date' => $interval_date,
+                'data_count' => $data_count,
+                'percent' => $percent
             ];
         }
 
@@ -259,7 +270,7 @@ class GetDataController extends Controller
             'status' => 'OK',
             'message' => 'Success',
             'id' => $id,
-            'title' => $title,
+            'title' => $title, // Sesuaikan dengan nilai yang sesuai
             'data' => $data
         ]);
     }
