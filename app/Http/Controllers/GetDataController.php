@@ -234,14 +234,17 @@ class GetDataController extends Controller
 
         $query = "
         SELECT 
-            YEARWEEK(time, 1) AS year_week,
+            year_week,
             MIN(time) AS start_date,
             MAX(time) AS end_date,
             COUNT(*) AS total_records
-        FROM $id
-        WHERE time >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
-          AND YEARWEEK(time, 1) != YEARWEEK(NOW(), 1)
-          AND MONTH(MIN(time)) != MONTH(MAX(time))
+        FROM (
+            SELECT 
+                YEARWEEK(time, 1) AS year_week,
+                time
+            FROM $id
+            WHERE time >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+        ) AS subquery
         GROUP BY year_week
         ORDER BY year_week;
     ";
