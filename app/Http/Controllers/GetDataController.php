@@ -240,39 +240,40 @@ class GetDataController extends Controller
             COUNT(*) AS total_records
         FROM $id
         WHERE time >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+        AND MONTH(MIN(time)) != MONTH(MAX(time))
         GROUP BY year_week
         ORDER BY year_week;
     ";
 
-    $results = DB::select(DB::raw($query));
+        $results = DB::select(DB::raw($query));
 
-    // Format output JSON
-    $data = [];
-    foreach ($results as $result) {
-        $interval_date = date('d/m/Y', strtotime($result->start_date)) . ' - ' . date('d/m/Y', strtotime($result->end_date));
-        $data_count = $result->total_records;
-        
-        // Hitung persentase
-        $expected_count = 5040;
-        $percent = ($data_count / $expected_count) * 100;
-        if ($percent > 100) {
-            $percent = 100;
+        // Format output JSON
+        $data = [];
+        foreach ($results as $result) {
+            $interval_date = date('d/m/Y', strtotime($result->start_date)) . ' - ' . date('d/m/Y', strtotime($result->end_date));
+            $data_count = $result->total_records;
+
+            // Hitung persentase
+            $expected_count = 5040;
+            $percent = ($data_count / $expected_count) * 100;
+            if ($percent > 100) {
+                $percent = 100;
+            }
+            $percent = number_format($percent, 2);
+
+            $data[] = [
+                'interval_date' => $interval_date,
+                'data_count' => $data_count,
+                'percent' => $percent
+            ];
         }
-        $percent = number_format($percent, 2);
 
-        $data[] = [
-            'interval_date' => $interval_date,
-            'data_count' => $data_count,
-            'percent' => $percent
-        ];
+        return response()->json([
+            'status' => 'OK',
+            'message' => 'Success',
+            'id' => $id,
+            'title' => $title,
+            'data' => $data
+        ]);
     }
-
-    return response()->json([
-        'status' => 'OK',
-        'message' => 'Success',
-        'id' => $id,
-        'title' => $title,
-        'data' => $data
-    ]);
-}
 }
