@@ -248,12 +248,15 @@ class GetDataController extends Controller
         // Format output JSON
         $data = [];
         $week_in_month = [];
+
         foreach ($results as $result) {
             $start_date = strtotime($result->start_date);
             $end_date = strtotime($result->end_date);
+            
+            $days = (int)ceil(($end_date - $start_date +1) / (60 * 60 * 24));
     
-            // Hitung persentase
-            $expected_count = 5040;
+            // Hitung persentase beradasrkan jumlah hari 
+            $expected_count = 720 * $days;
             $data_count = $result->total_records;
             $percent = ($data_count / $expected_count) * 100;
             if ($percent > 100) {
