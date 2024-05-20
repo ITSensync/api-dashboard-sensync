@@ -28,4 +28,6 @@ use App\Http\Controllers\DataCountController;
     Route::get('sparing/mutu', [GetDataController::class, 'getDataMutu']);
     Route::get('sparing/data-count', [GetDataController::class, 'getCountData']);
     Route::get('sparing/sparing-weekly-data/{id}', [GetDataController::class, 'getWeeklyDataById']);
+    Route::get('sparing/percentages', [GetDataController::class, 'getMonthlyAveragePercentages']);
+
 
