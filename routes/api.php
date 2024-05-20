@@ -29,5 +29,6 @@ use App\Http\Controllers\DataCountController;
     Route::get('sparing/data-count', [GetDataController::class, 'getCountData']);
     Route::get('sparing/sparing-weekly-data/{id}', [GetDataController::class, 'getWeeklyDataById']);
     Route::get('sparing/percentages', [GetDataController::class, 'getMonthlyAveragePercentages']);
+    Route::get('sparing/percentages/all', [GetDataController::class, 'getMonthlyAveragePercentageForAllSites']);
 
 
