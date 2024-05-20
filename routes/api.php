@@ -33,5 +33,5 @@ use App\Http\Controllers\DataCountController;
     Route::get('sparing/percentages/bandung', [GetDataController::class, 'getMonthlyAveragePercentageForBandungSites']);
     Route::get('sparing/percentages/nonbandung', [GetDataController::class, 'getMonthlyAveragePercentageForNonBandungSites']);
     Route::get('sparing/percentages/pwk', [GetDataController::class, 'getMonthlyAveragePercentageForIndoramaPWKSites']);
-
+    Route::get('sparing/percentages/pkt', [GetDataController::class, 'getMonthlyAveragePercentageForIndoramaPWKSites']);
 
