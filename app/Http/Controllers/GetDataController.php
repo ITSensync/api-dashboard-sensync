@@ -390,7 +390,10 @@ class GetDataController extends Controller
             'sparing08' => 'Papyrus',
             'sparing09' => 'BCP',
             'sparing10' => 'Pangjaya',
-            'sparing11' => 'LPA',
+            // 'sparing11' => 'LPA',
+            'weaving01' => 'Weaving01',
+            'weaving02' => 'Weaving02',
+            'spinning' => 'Spinning',
         ];
 
         $allWeeklyPercentages = [];
@@ -539,7 +542,7 @@ class GetDataController extends Controller
             'sparing02' => 'Indorama PWK',
             'sparing05' => 'Besland',
             'sparing06' => 'Indotaisei',
-            'sparing11' => 'LPA',
+            // 'sparing11' => 'LPA',
         ];
 
         $allWeeklyPercentages = [];
