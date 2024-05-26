@@ -390,7 +390,7 @@ class GetDataController extends Controller
             'sparing08' => 'Papyrus',
             'sparing09' => 'BCP',
             'sparing10' => 'Pangjaya',
-            // 'sparing11' => 'LPA',
+            'sparing11' => 'LPA',
             'weaving01' => 'Weaving01',
             'weaving02' => 'Weaving02',
             'spinning' => 'Spinning',
