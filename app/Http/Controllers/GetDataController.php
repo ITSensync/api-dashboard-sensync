@@ -539,10 +539,9 @@ class GetDataController extends Controller
     public function getMonthlyAveragePercentageForIndoramaPWKSites()
     {
         $bandungIds = [
-            'sparing02' => 'Indorama PWK',
-            'sparing05' => 'Besland',
-            'sparing06' => 'Indotaisei',
-            // 'sparing11' => 'LPA',
+            'weaving01' => 'Weaving 01',
+            'weaving02' => 'Weaving 02',
+            'spinning' => 'Spinning',
         ];
 
         $allWeeklyPercentages = [];
@@ -613,9 +612,11 @@ class GetDataController extends Controller
     public function getMonthlyAveragePercentageForNonBandungSites()
     {
         $bandungIds = [
-            'weaving01' => 'Weaving 01',
-            'weaving02' => 'Weaving 02',
-            'spinning' => 'Spinning',
+            'sparing02' => 'Indorama PWK',
+            'sparing05' => 'Besland',
+            'sparing06' => 'Indotaisei',
+            'sparing11' => 'LPA',
+            
         ];
 
         $allWeeklyPercentages = [];
