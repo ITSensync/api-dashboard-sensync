@@ -109,20 +109,20 @@ class GetDataHoursController extends Controller
     public function getMonthlyAveragePercentageHoursForAllSites()
     {
         $validIds = [
-            'sparing01' => 'Gistex',
-            'sparing02' => 'Indorama PWK',
-            'sparing03' => 'PMT',
-            'sparing04' => 'Indorama PDL',
-            'sparing05' => 'Besland',
-            'sparing06' => 'Indotaisei',
-            'sparing07' => 'Daliatex',
-            'sparing08' => 'Papyrus',
-            'sparing09' => 'BCP',
-            'sparing10' => 'Pangjaya',
-            'sparing11' => 'LPA',
-            'weaving01' => 'Weaving01',
-            'weaving02' => 'Weaving02',
-            'spinning' => 'Spinning',
+            'sparing01_lap' => 'Gistex',
+            'sparing02_lap' => 'Indorama PWK',
+            'sparing03_lap' => 'PMT',
+            'sparing04_lap' => 'Indorama PDL',
+            'sparing05_lap' => 'Besland',
+            'sparing06_lap' => 'Indotaisei',
+            'sparing07_lap' => 'Daliatex',
+            'sparing08_lap' => 'Papyrus',
+            'sparing09_lap' => 'BCP',
+            'sparing10_lap' => 'Pangjaya',
+            'sparing11_lap' => 'LPA',
+            'weaving01_lap' => 'weaving01',
+            'weaving02_lap' => 'weaving02',
+            'spinning_lap' => 'spinning',
         ];
 
         $allWeeklyPercentages = [];
