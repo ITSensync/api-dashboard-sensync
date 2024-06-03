@@ -316,6 +316,9 @@ class GetDataController extends Controller
             'sparing09' => 'BCP',
             'sparing10' => 'Pangjaya',
             'sparing11' => 'LPA',
+            'weaving01' => 'Weaving01',
+            'weaving02' => 'Weaving02',
+            'spinning' => 'Spinning',
         ];
 
         $monthlyAverages = [];
@@ -390,7 +393,7 @@ class GetDataController extends Controller
             'sparing08' => 'Papyrus',
             'sparing09' => 'BCP',
             'sparing10' => 'Pangjaya',
-            // 'sparing11' => 'LPA',
+            'sparing11' => 'LPA',
             'weaving01' => 'Weaving01',
             'weaving02' => 'Weaving02',
             'spinning' => 'Spinning',
@@ -399,18 +402,31 @@ class GetDataController extends Controller
         $allWeeklyPercentages = [];
 
         foreach ($validIds as $id => $title) {
+            //     $query = "
+            //     SELECT 
+            //         WEEK(time, 1) AS week,
+            //         YEAR(time) AS year,
+            //         MIN(time) AS start_date,
+            //         MAX(time) AS end_date,
+            //         COUNT(*) AS total_records
+            //     FROM $id
+            //     WHERE MONTH(time) = MONTH(CURDATE()) AND YEAR(time) = YEAR(CURDATE())
+            //     GROUP BY week, year
+            //     ORDER BY week;
+            // ";
+
             $query = "
-            SELECT 
-                WEEK(time, 1) AS week,
-                YEAR(time) AS year,
-                MIN(time) AS start_date,
-                MAX(time) AS end_date,
-                COUNT(*) AS total_records
-            FROM $id
-            WHERE MONTH(time) = MONTH(CURDATE()) AND YEAR(time) = YEAR(CURDATE())
-            GROUP BY week, year
-            ORDER BY week;
-        ";
+    SELECT 
+        WEEK(time, 1) AS week,
+        YEAR(time) AS year,
+        MIN(time) AS start_date,
+        MAX(time) AS end_date,
+        COUNT(*) AS total_records
+    FROM $id
+    WHERE MONTH(time) = 5 AND YEAR(time) = YEAR(CURDATE())
+    GROUP BY week, year
+    ORDER BY week;
+";
 
             $results = DB::select(DB::raw($query));
 
@@ -475,18 +491,30 @@ class GetDataController extends Controller
         $allWeeklyPercentages = [];
 
         foreach ($bandungIds as $id => $title) {
-            $query = "
-            SELECT 
-                WEEK(time, 1) AS week,
-                YEAR(time) AS year,
-                MIN(time) AS start_date,
-                MAX(time) AS end_date,
-                COUNT(*) AS total_records
-            FROM $id
-            WHERE MONTH(time) = MONTH(CURDATE()) AND YEAR(time) = YEAR(CURDATE())
-            GROUP BY week, year
-            ORDER BY week;
-        ";
+        //     $query = "
+        //     SELECT 
+        //         WEEK(time, 1) AS week,
+        //         YEAR(time) AS year,
+        //         MIN(time) AS start_date,
+        //         MAX(time) AS end_date,
+        //         COUNT(*) AS total_records
+        //     FROM $id
+        //     WHERE MONTH(time) = MONTH(CURDATE()) AND YEAR(time) = YEAR(CURDATE())
+        //     GROUP BY week, year
+        //     ORDER BY week;
+        // ";
+        $query = "
+        SELECT 
+            WEEK(time, 1) AS week,
+            YEAR(time) AS year,
+            MIN(time) AS start_date,
+            MAX(time) AS end_date,
+            COUNT(*) AS total_records
+        FROM $id
+        WHERE MONTH(time) = 5 AND YEAR(time) = YEAR(CURDATE())
+        GROUP BY week, year
+        ORDER BY week;
+    ";
 
             $results = DB::select(DB::raw($query));
 
@@ -535,7 +563,7 @@ class GetDataController extends Controller
     }
 
 
-    //rata rata site sparing non bandung 
+    //rata rata site sparing Indorama Purwakarta
     public function getMonthlyAveragePercentageForIndoramaPWKSites()
     {
         $bandungIds = [
@@ -547,18 +575,31 @@ class GetDataController extends Controller
         $allWeeklyPercentages = [];
 
         foreach ($bandungIds as $id => $title) {
-            $query = "
-            SELECT 
-                WEEK(time, 1) AS week,
-                YEAR(time) AS year,
-                MIN(time) AS start_date,
-                MAX(time) AS end_date,
-                COUNT(*) AS total_records
-            FROM $id
-            WHERE MONTH(time) = MONTH(CURDATE()) AND YEAR(time) = YEAR(CURDATE())
-            GROUP BY week, year
-            ORDER BY week;
-        ";
+        //     $query = "
+        //     SELECT 
+        //         WEEK(time, 1) AS week,
+        //         YEAR(time) AS year,
+        //         MIN(time) AS start_date,
+        //         MAX(time) AS end_date,
+        //         COUNT(*) AS total_records
+        //     FROM $id
+        //     WHERE MONTH(time) = MONTH(CURDATE()) AND YEAR(time) = YEAR(CURDATE())
+        //     GROUP BY week, year
+        //     ORDER BY week;
+        // ";
+
+        $query = "
+        SELECT 
+            WEEK(time, 1) AS week,
+            YEAR(time) AS year,
+            MIN(time) AS start_date,
+            MAX(time) AS end_date,
+            COUNT(*) AS total_records
+        FROM $id
+        WHERE MONTH(time) = 5 AND YEAR(time) = YEAR(CURDATE())
+        GROUP BY week, year
+        ORDER BY week;
+    ";
 
             $results = DB::select(DB::raw($query));
 
@@ -607,33 +648,45 @@ class GetDataController extends Controller
     }
 
 
-    //rata rata sparing indorama purwakata 
-
+    //rata rata sparing nonBandung
     public function getMonthlyAveragePercentageForNonBandungSites()
     {
         $bandungIds = [
             'sparing02' => 'Indorama PWK',
             'sparing05' => 'Besland',
             'sparing06' => 'Indotaisei',
-            // 'sparing11' => 'LPA',
-            
+            'sparing11' => 'LPA',
+
         ];
 
         $allWeeklyPercentages = [];
 
         foreach ($bandungIds as $id => $title) {
-            $query = "
-            SELECT 
-                WEEK(time, 1) AS week,
-                YEAR(time) AS year,
-                MIN(time) AS start_date,
-                MAX(time) AS end_date,
-                COUNT(*) AS total_records
-            FROM $id
-            WHERE MONTH(time) = MONTH(CURDATE()) AND YEAR(time) = YEAR(CURDATE())
-            GROUP BY week, year
-            ORDER BY week;
-        ";
+        //     $query = "
+        //     SELECT 
+        //         WEEK(time, 1) AS week,
+        //         YEAR(time) AS year,
+        //         MIN(time) AS start_date,
+        //         MAX(time) AS end_date,
+        //         COUNT(*) AS total_records
+        //     FROM $id
+        //     WHERE MONTH(time) = MONTH(CURDATE()) AND YEAR(time) = YEAR(CURDATE())
+        //     GROUP BY week, year
+        //     ORDER BY week;
+        // ";
+
+        $query = "
+        SELECT 
+            WEEK(time, 1) AS week,
+            YEAR(time) AS year,
+            MIN(time) AS start_date,
+            MAX(time) AS end_date,
+            COUNT(*) AS total_records
+        FROM $id
+        WHERE MONTH(time) = 5 AND YEAR(time) = YEAR(CURDATE())
+        GROUP BY week, year
+        ORDER BY week;
+    ";
 
             $results = DB::select(DB::raw($query));
 
