@@ -9,7 +9,7 @@ class ApiRoutesController extends Controller
 {
     public function getRoutes()
     {
-        $path = public_path('app/public/api_routes.json'); // Sesuaikan path jika diperlukan
+        $path = public_path('api_routes.json'); // Sesuaikan path jika diperlukan
         if (File::exists($path)) {
             $json = File::get($path);
             return response()->json(json_decode($json, true));
