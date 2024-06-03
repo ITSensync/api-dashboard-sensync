@@ -38,5 +38,5 @@ use App\Http\Controllers\DataCountController;
 
 
     Route::get('sparing/sparing-hours-data/{id}', [GetDataHoursController::class, 'getWeeklyDataHoursById']);
-
+    Route::get('sparing/percentages-hours/all', [GetDataHoursController::class, 'getMonthlyAveragePercentageHoursForAllSites']);
 
