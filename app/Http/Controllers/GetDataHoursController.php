@@ -150,7 +150,7 @@ class GetDataHoursController extends Controller
                 $days = (int)ceil(($end_date - $start_date + 1) / (60 * 60 * 24));
 
                 // Calculate expected count based on the number of days
-                $expected_count = 720 * $days;
+                $expected_count = 24 * $days;
                 $data_count = $result->total_records;
                 $percent = ($data_count / $expected_count) * 100;
                 if ($percent > 100) {
