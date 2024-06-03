@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SparingController;
 use App\Http\Controllers\GetDataController;
+use App\Http\Controllers\GetDataHoursController;
 use App\Http\Controllers\DataCountController;
 
 
@@ -36,6 +37,6 @@ use App\Http\Controllers\DataCountController;
 
 
 
-    Route::get('sparing/sparing-hours-data/{id}', [GetDataController::class, 'getWeeklyDataHoursById']);
+    Route::get('sparing/sparing-hours-data/{id}', [GetDataHoursController::class, 'getWeeklyDataHoursById']);
 
 
