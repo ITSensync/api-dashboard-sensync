@@ -35,3 +35,7 @@ use App\Http\Controllers\DataCountController;
     Route::get('sparing/percentages/pwk', [GetDataController::class, 'getMonthlyAveragePercentageForIndoramaPWKSites']);
 
 
+
+    Route::get('sparing/sparing-hours-data/{id}', [GetDataController::class, 'getWeeklyDataHoursById']);
+
+
