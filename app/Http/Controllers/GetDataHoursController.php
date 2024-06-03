@@ -339,7 +339,7 @@ class GetDataHoursController extends Controller
     public function getMonthlyAveragePercentageHoursForNonBandungSites()
     {
         $validIds = [
-            'sparing02_Lap' => 'Indorama PWK',
+            'sparing02_lap' => 'Indorama PWK',
             'sparing05_lap' => 'Besland',
             'sparing06_lap' => 'Indotaisei',
             'sparing11_lap' => 'LPA',
