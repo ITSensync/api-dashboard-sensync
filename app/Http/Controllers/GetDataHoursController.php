@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-
 
 class GetDataHoursController extends Controller
 {
-
-    // rata rata data sparing perjam mingguan
     public function getWeeklyDataHoursById($id)
     {
         $validIds = [
@@ -39,26 +34,23 @@ class GetDataHoursController extends Controller
 
         $title = $validIds[$id];
         $query = "
-    SELECT 
-        WEEK(time, 1) AS week,
-        YEAR(time) AS year,
-        MIN(time) AS start_date,
-        MAX(time) AS end_date,
-        COUNT(*) AS total_records
-    FROM $id
-    WHERE MONTH(time) = MONTH(CURDATE()) AND YEAR(time) = YEAR(CURDATE())
-    GROUP BY week, year
-    ORDER BY week;
-";
-
-
-
+            SELECT 
+                WEEK(CONCAT(date, ' ', hour), 1) AS week,
+                YEAR(CONCAT(date, ' ', hour)) AS year,
+                MIN(CONCAT(date, ' ', hour)) AS start_date,
+                MAX(CONCAT(date, ' ', hour)) AS end_date,
+                COUNT(*) AS total_records
+            FROM $id
+            WHERE MONTH(date) = 5 AND YEAR(date) = YEAR(CURDATE())
+            GROUP BY week, year
+            ORDER BY week;
+        ";
 
         $results = DB::select(DB::raw($query));
 
         // Format output JSON
         $data = [];
-        $week_in_month = [];
+        $weeks_in_month = [];
 
         foreach ($results as $result) {
             $start_date = strtotime($result->start_date);
@@ -66,7 +58,7 @@ class GetDataHoursController extends Controller
 
             $days = (int)ceil(($end_date - $start_date + 1) / (60 * 60 * 24));
 
-            // Hitung persentase beradasrkan jumlah hari 
+            // Hitung persentase berdasarkan jumlah hari 
             $expected_count = 720 * $days;
             $data_count = $result->total_records;
             $percent = ($data_count / $expected_count) * 100;
