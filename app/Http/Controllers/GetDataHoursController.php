@@ -35,13 +35,13 @@ class GetDataHoursController extends Controller
         $title = $validIds[$id];
         $query = "
             SELECT 
-                WEEK(CONCAT(date, ' ', hour), 1) AS week,
-                YEAR(CONCAT(date, ' ', hour)) AS year,
-                MIN(CONCAT(date, ' ', hour)) AS start_date,
-                MAX(CONCAT(date, ' ', hour)) AS end_date,
+                WEEK(CONCAT(tanggal, ' ', jam), 1) AS week,
+                YEAR(CONCAT(tanggal, ' ', jam)) AS year,
+                MIN(CONCAT(tanggal, ' ', jam)) AS start_date,
+                MAX(CONCAT(tanggal, ' ', jam)) AS end_date,
                 COUNT(*) AS total_records
             FROM $id
-            WHERE MONTH(date) = 5 AND YEAR(date) = YEAR(CURDATE())
+            WHERE MONTH(tanggal) = MONTH(CURDATE()) AND YEAR(tanggal) = YEAR(CURDATE())
             GROUP BY week, year
             ORDER BY week;
         ";
