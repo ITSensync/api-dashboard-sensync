@@ -25,6 +25,8 @@ use App\Http\Controllers\DataCountController;
 
     // Route::get('sparing/{id_device}', [SparingController::class, 'show']);
     // Route::get('sparing/status/{id_device}', [SparingController::class, 'status']);
+
+    // router sparing per 2mnt
     Route::get('sparing/data', [GetDataController::class, 'getData']);
     Route::get('sparing/mutu', [GetDataController::class, 'getDataMutu']);
     Route::get('sparing/data-count', [GetDataController::class, 'getCountData']);
@@ -36,7 +38,9 @@ use App\Http\Controllers\DataCountController;
     Route::get('sparing/percentages/pwk', [GetDataController::class, 'getMonthlyAveragePercentageForIndoramaPWKSites']);
 
 
-
+// router sparing perjam
     Route::get('sparing/sparing-hours-data/{id}', [GetDataHoursController::class, 'getWeeklyDataHoursById']);
     Route::get('sparing/percentages-hours/all', [GetDataHoursController::class, 'getMonthlyAveragePercentageHoursForAllSites']);
-
+    Route::get('sparing/percentages-hours/bandung', [GetDataHoursController::class, 'getMonthlyAveragePercentageHoursForBandungSites']);
+    Route::get('sparing/percentages-hours/nonbandung', [GetDataHoursController::class, 'getMonthlyAveragePercentageHoursForNonBandungSites']);
+    Route::get('sparing/percentages-hours/pwk', [GetDataHoursController::class, 'getMonthlyAveragePercentageHoursForIndoramaPWKSites']);

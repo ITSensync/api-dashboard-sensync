@@ -186,4 +186,224 @@ class GetDataHoursController extends Controller
             'data' => [$monthlyAverage]
         ]);
     }
+
+    //rata rata site sparing bandung 
+    public function getMonthlyAveragePercentageHoursForBandungSites()
+    {
+        $validIds = [
+            'sparing01_lap' => 'Gistex',
+            'sparing03_lap' => 'PMT',
+            'sparing04_lap' => 'Indorama PDL',
+            'sparing07_lap' => 'Daliatex',
+            'sparing08_lap' => 'Papyrus',
+            'sparing09_lap' => 'BCP',
+            'sparing10_lap' => 'Pangjaya',
+        ];
+
+        $allWeeklyPercentages = [];
+
+        foreach ($validIds as $id => $title) {
+            $query = "
+            SELECT 
+                WEEK(CONCAT(tanggal, ' ', jam), 1) AS week,
+                YEAR(CONCAT(tanggal, ' ', jam)) AS year,
+                MIN(CONCAT(tanggal, ' ', jam)) AS start_date,
+                MAX(CONCAT(tanggal, ' ', jam)) AS end_date,
+                COUNT(*) AS total_records
+            FROM $id
+            WHERE MONTH(tanggal) = MONTH(CURDATE()) AND YEAR(tanggal) = YEAR(CURDATE())
+            GROUP BY week, year
+            ORDER BY week;
+        ";
+
+            $results = DB::select(DB::raw($query));
+
+            // Calculate the weekly percentages
+            foreach ($results as $result) {
+                $start_date = strtotime($result->start_date);
+                $end_date = strtotime($result->end_date);
+                $days = (int)ceil(($end_date - $start_date + 1) / (60 * 60 * 24));
+
+                // Calculate expected count based on the number of days
+                $expected_count = 24 * $days;
+                $data_count = $result->total_records;
+                $percent = ($data_count / $expected_count) * 100;
+                if ($percent > 100) {
+                    $percent = 100;
+                }
+                $percent = number_format($percent, 2);
+
+                $allWeeklyPercentages[] = $percent;
+            }
+        }
+
+        // Calculate the overall monthly average percentage
+        if (count($allWeeklyPercentages) > 0) {
+            $averagePercent = array_sum($allWeeklyPercentages) / count($allWeeklyPercentages);
+            $averagePercent = number_format($averagePercent, 2);
+
+            $monthlyAverage = [
+                'id' => 'sparing',
+                'title' => 'all site',
+                'average_percent' => $averagePercent,
+            ];
+        } else {
+            $monthlyAverage = [
+                'id' => 'sparing',
+                'title' => 'all site',
+                'average_percent' => '0.00',
+            ];
+        }
+
+        return response()->json([
+            'status' => 'OK',
+            'message' => 'Success',
+            'data' => [$monthlyAverage]
+        ]);
+    }
+
+
+    //rata rata site sparing Indorama PWK 
+    public function getMonthlyAveragePercentageHoursForIndoramaPWKSites()
+    {
+        $validIds = [
+            'weaving01_lap' => 'Weaving 01',
+            'weaving02_lap' => 'Weaving 02',
+            'spinning_lap' => 'Spinning',
+        ];
+
+        $allWeeklyPercentages = [];
+
+        foreach ($validIds as $id => $title) {
+            $query = "
+            SELECT 
+                WEEK(CONCAT(tanggal, ' ', jam), 1) AS week,
+                YEAR(CONCAT(tanggal, ' ', jam)) AS year,
+                MIN(CONCAT(tanggal, ' ', jam)) AS start_date,
+                MAX(CONCAT(tanggal, ' ', jam)) AS end_date,
+                COUNT(*) AS total_records
+            FROM $id
+            WHERE MONTH(tanggal) = MONTH(CURDATE()) AND YEAR(tanggal) = YEAR(CURDATE())
+            GROUP BY week, year
+            ORDER BY week;
+        ";
+
+            $results = DB::select(DB::raw($query));
+
+            // Calculate the weekly percentages
+            foreach ($results as $result) {
+                $start_date = strtotime($result->start_date);
+                $end_date = strtotime($result->end_date);
+                $days = (int)ceil(($end_date - $start_date + 1) / (60 * 60 * 24));
+
+                // Calculate expected count based on the number of days
+                $expected_count = 24 * $days;
+                $data_count = $result->total_records;
+                $percent = ($data_count / $expected_count) * 100;
+                if ($percent > 100) {
+                    $percent = 100;
+                }
+                $percent = number_format($percent, 2);
+
+                $allWeeklyPercentages[] = $percent;
+            }
+        }
+
+        // Calculate the overall monthly average percentage
+        if (count($allWeeklyPercentages) > 0) {
+            $averagePercent = array_sum($allWeeklyPercentages) / count($allWeeklyPercentages);
+            $averagePercent = number_format($averagePercent, 2);
+
+            $monthlyAverage = [
+                'id' => 'sparing',
+                'title' => 'all site',
+                'average_percent' => $averagePercent,
+            ];
+        } else {
+            $monthlyAverage = [
+                'id' => 'sparing',
+                'title' => 'all site',
+                'average_percent' => '0.00',
+            ];
+        }
+
+        return response()->json([
+            'status' => 'OK',
+            'message' => 'Success',
+            'data' => [$monthlyAverage]
+        ]);
+    }
+
+
+    //rata rata site sparing non Bandung
+    public function getMonthlyAveragePercentageHoursForNonBandungSites()
+    {
+        $validIds = [
+            'sparing02_Lap' => 'Indorama PWK',
+            'sparing05_lap' => 'Besland',
+            'sparing06_lap' => 'Indotaisei',
+            'sparing11_lap' => 'LPA',
+        ];
+
+        $allWeeklyPercentages = [];
+
+        foreach ($validIds as $id => $title) {
+            $query = "
+            SELECT 
+                WEEK(CONCAT(tanggal, ' ', jam), 1) AS week,
+                YEAR(CONCAT(tanggal, ' ', jam)) AS year,
+                MIN(CONCAT(tanggal, ' ', jam)) AS start_date,
+                MAX(CONCAT(tanggal, ' ', jam)) AS end_date,
+                COUNT(*) AS total_records
+            FROM $id
+            WHERE MONTH(tanggal) = MONTH(CURDATE()) AND YEAR(tanggal) = YEAR(CURDATE())
+            GROUP BY week, year
+            ORDER BY week;
+        ";
+
+            $results = DB::select(DB::raw($query));
+
+            // Calculate the weekly percentages
+            foreach ($results as $result) {
+                $start_date = strtotime($result->start_date);
+                $end_date = strtotime($result->end_date);
+                $days = (int)ceil(($end_date - $start_date + 1) / (60 * 60 * 24));
+
+                // Calculate expected count based on the number of days
+                $expected_count = 24 * $days;
+                $data_count = $result->total_records;
+                $percent = ($data_count / $expected_count) * 100;
+                if ($percent > 100) {
+                    $percent = 100;
+                }
+                $percent = number_format($percent, 2);
+
+                $allWeeklyPercentages[] = $percent;
+            }
+        }
+
+        // Calculate the overall monthly average percentage
+        if (count($allWeeklyPercentages) > 0) {
+            $averagePercent = array_sum($allWeeklyPercentages) / count($allWeeklyPercentages);
+            $averagePercent = number_format($averagePercent, 2);
+
+            $monthlyAverage = [
+                'id' => 'sparing',
+                'title' => 'all site',
+                'average_percent' => $averagePercent,
+            ];
+        } else {
+            $monthlyAverage = [
+                'id' => 'sparing',
+                'title' => 'all site',
+                'average_percent' => '0.00',
+            ];
+        }
+
+        return response()->json([
+            'status' => 'OK',
+            'message' => 'Success',
+            'data' => [$monthlyAverage]
+        ]);
+    }
 }
