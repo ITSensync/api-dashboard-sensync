@@ -1,0 +1,21 @@
+{
+    "sparing_per_2mnt": {
+      "data": "sparing/data",
+      "mutu": "sparing/mutu",
+      "data_count": "sparing/data-count",
+      "weekly_data_by_id": "sparing/sparing-weekly-data/{id}",
+      "percentages": "sparing/percentages",
+      "percentages_all": "sparing/percentages/all",
+      "percentages_bandung": "sparing/percentages/bandung",
+      "percentages_nonbandung": "sparing/percentages/nonbandung",
+      "percentages_pwk": "sparing/percentages/pwk"
+    },
+    "sparing_per_jam": {
+      "weekly_data_hours_by_id": "sparing/sparing-hours-data/{id}",
+      "percentages_hours_all": "sparing/percentages-hours/all",
+      "percentages_hours_bandung": "sparing/percentages-hours/bandung",
+      "percentages_hours_nonbandung": "sparing/percentages-hours/nonbandung",
+      "percentages_hours_pwk": "sparing/percentages-hours/pwk"
+    }
+  }
+  

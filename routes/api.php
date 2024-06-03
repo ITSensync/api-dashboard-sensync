@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SparingController;
 use App\Http\Controllers\GetDataController;
 use App\Http\Controllers\GetDataHoursController;
-use App\Http\Controllers\DataCountController;
+use App\Http\Controllers\ApiRoutesController;
 
 
 /*
@@ -44,3 +44,6 @@ use App\Http\Controllers\DataCountController;
     Route::get('sparing/percentages-hours/bandung', [GetDataHoursController::class, 'getMonthlyAveragePercentageHoursForBandungSites']);
     Route::get('sparing/percentages-hours/nonbandung', [GetDataHoursController::class, 'getMonthlyAveragePercentageHoursForNonBandungSites']);
     Route::get('sparing/percentages-hours/pwk', [GetDataHoursController::class, 'getMonthlyAveragePercentageHoursForIndoramaPWKSites']);
+
+
+    Route::get('api/routes', [ApiRoutesController::class, 'getRoutes']);
