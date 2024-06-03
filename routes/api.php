@@ -19,49 +19,27 @@ use App\Http\Controllers\ApiRoutesController;
 |
 */
 
-Route::middleware('auth:sanctum')->group(function () {
+
+    // router sparing per 2mnt
+    Route::get('sparing/data', [GetDataController::class, 'getData']);
+    Route::get('sparing/mutu', [GetDataController::class, 'getDataMutu']);
+    Route::get('sparing/data-count', [GetDataController::class, 'getCountData']);
+    Route::get('sparing/sparing-weekly-data/{id}', [GetDataController::class, 'getWeeklyDataById']);
+    Route::get('sparing/percentages', [GetDataController::class, 'getMonthlyAveragePercentages']);
+    Route::get('sparing/percentages/all', [GetDataController::class, 'getMonthlyAveragePercentageForAllSites']);
+    Route::get('sparing/percentages/bandung', [GetDataController::class, 'getMonthlyAveragePercentageForBandungSites']);
+    Route::get('sparing/percentages/nonbandung', [GetDataController::class, 'getMonthlyAveragePercentageForNonBandungSites']);
+    Route::get('sparing/percentages/pwk', [GetDataController::class, 'getMonthlyAveragePercentageForIndoramaPWKSites']);
+
+
+// router sparing perjam
+    Route::get('sparing/sparing-hours-data/{id}', [GetDataHoursController::class, 'getWeeklyDataHoursById']);
+    Route::get('sparing/percentages-hours/all', [GetDataHoursController::class, 'getMonthlyAveragePercentageHoursForAllSites']);
+    Route::get('sparing/percentages-hours/bandung', [GetDataHoursController::class, 'getMonthlyAveragePercentageHoursForBandungSites']);
+    Route::get('sparing/percentages-hours/nonbandung', [GetDataHoursController::class, 'getMonthlyAveragePercentageHoursForNonBandungSites']);
+    Route::get('sparing/percentages-hours/pwk', [GetDataHoursController::class, 'getMonthlyAveragePercentageHoursForIndoramaPWKSites']);
+
+
     Route::middleware('throttle:60,1')->group(function () {
-        // router sparing per 2mnt
-        Route::get('sparing/data', [GetDataController::class, 'getData']);
-        Route::get('sparing/mutu', [GetDataController::class, 'getDataMutu']);
-        Route::get('sparing/data-count', [GetDataController::class, 'getCountData']);
-        Route::get('sparing/sparing-weekly-data/{id}', [GetDataController::class, 'getWeeklyDataById']);
-        Route::get('sparing/percentages', [GetDataController::class, 'getMonthlyAveragePercentages']);
-        Route::get('sparing/percentages/all', [GetDataController::class, 'getMonthlyAveragePercentageForAllSites']);
-        Route::get('sparing/percentages/bandung', [GetDataController::class, 'getMonthlyAveragePercentageForBandungSites']);
-        Route::get('sparing/percentages/nonbandung', [GetDataController::class, 'getMonthlyAveragePercentageForNonBandungSites']);
-        Route::get('sparing/percentages/pwk', [GetDataController::class, 'getMonthlyAveragePercentageForIndoramaPWKSites']);
-
-        // router sparing perjam
-        Route::get('sparing/sparing-hours-data/{id}', [GetDataHoursController::class, 'getWeeklyDataHoursById']);
-        Route::get('sparing/percentages-hours/all', [GetDataHoursController::class, 'getMonthlyAveragePercentageHoursForAllSites']);
-        Route::get('sparing/percentages-hours/bandung', [GetDataHoursController::class, 'getMonthlyAveragePercentageHoursForBandungSites']);
-        Route::get('sparing/percentages-hours/nonbandung', [GetDataHoursController::class, 'getMonthlyAveragePercentageHoursForNonBandungSites']);
-        Route::get('sparing/percentages-hours/pwk', [GetDataHoursController::class, 'getMonthlyAveragePercentageHoursForIndoramaPWKSites']);
-
         Route::get('sparing/routes', [ApiRoutesController::class, 'getRoutes']);
     });
-});
-
-
-//     // router sparing per 2mnt
-//     Route::get('sparing/data', [GetDataController::class, 'getData']);
-//     Route::get('sparing/mutu', [GetDataController::class, 'getDataMutu']);
-//     Route::get('sparing/data-count', [GetDataController::class, 'getCountData']);
-//     Route::get('sparing/sparing-weekly-data/{id}', [GetDataController::class, 'getWeeklyDataById']);
-//     Route::get('sparing/percentages', [GetDataController::class, 'getMonthlyAveragePercentages']);
-//     Route::get('sparing/percentages/all', [GetDataController::class, 'getMonthlyAveragePercentageForAllSites']);
-//     Route::get('sparing/percentages/bandung', [GetDataController::class, 'getMonthlyAveragePercentageForBandungSites']);
-//     Route::get('sparing/percentages/nonbandung', [GetDataController::class, 'getMonthlyAveragePercentageForNonBandungSites']);
-//     Route::get('sparing/percentages/pwk', [GetDataController::class, 'getMonthlyAveragePercentageForIndoramaPWKSites']);
-
-
-// // router sparing perjam
-//     Route::get('sparing/sparing-hours-data/{id}', [GetDataHoursController::class, 'getWeeklyDataHoursById']);
-//     Route::get('sparing/percentages-hours/all', [GetDataHoursController::class, 'getMonthlyAveragePercentageHoursForAllSites']);
-//     Route::get('sparing/percentages-hours/bandung', [GetDataHoursController::class, 'getMonthlyAveragePercentageHoursForBandungSites']);
-//     Route::get('sparing/percentages-hours/nonbandung', [GetDataHoursController::class, 'getMonthlyAveragePercentageHoursForNonBandungSites']);
-//     Route::get('sparing/percentages-hours/pwk', [GetDataHoursController::class, 'getMonthlyAveragePercentageHoursForIndoramaPWKSites']);
-
-
-//     Route::get('sparing/routes', [ApiRoutesController::class, 'getRoutes']);
