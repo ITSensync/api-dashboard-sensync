@@ -231,18 +231,32 @@ class GetDataController extends Controller
         }
 
         $title = $validIds[$id];
-        $query = "
-        SELECT 
-            WEEK(time, 1) AS week,
-            YEAR(time) AS year,
-            MIN(time) AS start_date,
-            MAX(time) AS end_date,
-            COUNT(*) AS total_records
-        FROM $id
-        WHERE MONTH(time) = MONTH(CURDATE()) AND YEAR(time) = YEAR(CURDATE())
-        GROUP BY week, year
-        ORDER BY week;
-    ";
+    //     $query = "
+    //     SELECT 
+    //         WEEK(time, 1) AS week,
+    //         YEAR(time) AS year,
+    //         MIN(time) AS start_date,
+    //         MAX(time) AS end_date,
+    //         COUNT(*) AS total_records
+    //     FROM $id
+    //     WHERE MONTH(time) = MONTH(CURDATE()) AND YEAR(time) = YEAR(CURDATE())
+    //     GROUP BY week, year
+    //     ORDER BY week;
+    // ";
+
+    $query = "
+    SELECT 
+        WEEK(time, 1) AS week,
+        YEAR(time) AS year,
+        MIN(time) AS start_date,
+        MAX(time) AS end_date,
+        COUNT(*) AS total_records
+    FROM $id
+    WHERE MONTH(time) = 5 AND YEAR(time) = YEAR(CURDATE())
+    GROUP BY week, year
+    ORDER BY week;
+";
+
 
         $results = DB::select(DB::raw($query));
 
