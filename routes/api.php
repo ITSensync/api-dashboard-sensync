@@ -46,4 +46,4 @@ use App\Http\Controllers\ApiRoutesController;
     Route::get('sparing/percentages-hours/pwk', [GetDataHoursController::class, 'getMonthlyAveragePercentageHoursForIndoramaPWKSites']);
 
 
-    Route::get('api/routes', [ApiRoutesController::class, 'getRoutes']);
+    Route::get('sparing/routes', [ApiRoutesController::class, 'getRoutes']);
