@@ -7,65 +7,24 @@ use Illuminate\Support\Facades\DB;
 
 class PreviousMonthDataController extends Controller
 {
-    //
-    public function getPreviousMonthData(Request $request)
+    public function getPreviousMonthData($id, $month, $year)
     {
-        $request->validate([
-            'id' => 'required|string',
-            'month' => 'nullable|integer|min:1|max:12', // Tambahkan validasi untuk bulan
-            'year' => 'nullable|integer|min:1900|max:' . date('Y'), // Tambahkan validasi untuk tahun
-        ]);
-
-
-        $id = $request->input('id');
-        $month = $request->input('month') ?? date('n') - 1; // Ambil bulan sebelumnya jika tidak disediakan
-        $year = $request->input('year') ?? date('Y'); // Ambil tahun saat ini jika tidak disediakan
-
-        // Daftar ID yang valid beserta judulnya
-        $validIds = [
-            'sparing01' => 'Gistex',
-            'sparing02' => 'Indorama PWK',
-            'sparing03' => 'PMT',
-            'sparing04' => 'Indorama PDL',
-            'sparing05' => 'Besland',
-            'sparing06' => 'Indotaisei',
-            'sparing07' => 'Daliatex',
-            'sparing08' => 'Papyrus',
-            'sparing09' => 'BCP',
-            'sparing10' => 'Pangjaya',
-            'sparing11' => 'LPA',
-            'weaving01' => 'Weaving01',
-            'weaving02' => 'Weaving02',
-            'spinning' => 'Spinning',
-        ];
-
-        // Validasi ID
-        if (!array_key_exists($id, $validIds)) {
-            return response()->json([
-                'status' => 'Error',
-                'message' => 'Invalid ID Provider'
-            ], 400);
-        }
-
-        // Judul berdasarkan ID
-        $title = $validIds[$id];
-
         // Query untuk mendapatkan data bulan sebelumnya
         $query = "
-        SELECT 
-            WEEK(time, 1) AS week,
-            YEAR(time) AS year,
-            MIN(time) AS start_date,
-            MAX(time) AS end_date,
-            COUNT(*) AS total_records
-        FROM $id
-        WHERE MONTH(time) = :month AND YEAR(time) = :year
-        GROUP BY week, year
-        ORDER BY week;
-    ";
+            SELECT 
+                WEEK(time, 1) AS week,
+                YEAR(time) AS year,
+                MIN(time) AS start_date,
+                MAX(time) AS end_date,
+                COUNT(*) AS total_records
+            FROM $id
+            WHERE MONTH(time) = ? AND YEAR(time) = ?
+            GROUP BY week, year
+            ORDER BY week;
+        ";
 
-        // Eksekusi query
-        $results = DB::select(DB::raw($query), ['month' => $month, 'year' => $year]);
+        // Eksekusi query dengan parameter bulan dan tahun
+        $results = DB::select(DB::raw($query), [$month, $year]);
 
         // Format output JSON
         $data = [];
@@ -100,7 +59,6 @@ class PreviousMonthDataController extends Controller
             'status' => 'OK',
             'message' => 'Success',
             'id' => $id,
-            'title' => $title,
             'data' => $data
         ]);
     }
