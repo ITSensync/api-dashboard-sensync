@@ -41,4 +41,4 @@ use App\Http\Controllers\PreviousMonthDataController;
     Route::get('sparing/percentages-hours/pwk', [GetDataHoursController::class, 'getMonthlyAveragePercentageHoursForIndoramaPWKSites']);
 
 
-    Route::get('sparing/previous-month-data', [PreviousMonthDataController::class, 'getPreviousMonthData']);
+    Route::get('sparing/previous-month-data/{id}/{month}/{year}', [PreviousMonthDataController::class, 'getPreviousMonthData']);
