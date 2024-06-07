@@ -203,6 +203,7 @@ class GetDataController extends Controller
     }
 
 
+    // api yang di pake di dashboard performa 
     // rata rata sparing mingguan
     public function getWeeklyDataById($id)
     {
@@ -243,20 +244,6 @@ class GetDataController extends Controller
         GROUP BY week, year
         ORDER BY week;
     ";
-
-//     $query = "
-//     SELECT 
-//         WEEK(time, 1) AS week,
-//         YEAR(time) AS year,
-//         MIN(time) AS start_date,
-//         MAX(time) AS end_date,
-//         COUNT(*) AS total_records
-//     FROM $id
-//     WHERE MONTH(time) = 5 AND YEAR(time) = YEAR(CURDATE())
-//     GROUP BY week, year
-//     ORDER BY week;
-// ";
-
 
         $results = DB::select(DB::raw($query));
 
@@ -350,18 +337,6 @@ class GetDataController extends Controller
             GROUP BY week, year
             ORDER BY week;
         ";
-    //     $query = "
-    //     SELECT 
-    //         WEEK(time, 1) AS week,
-    //         YEAR(time) AS year,
-    //         MIN(time) AS start_date,
-    //         MAX(time) AS end_date,
-    //         COUNT(*) AS total_records
-    //     FROM $id
-    //     WHERE MONTH(time) = 5 AND YEAR(time) = YEAR(CURDATE())
-    //     GROUP BY week, year
-    //     ORDER BY week;
-    // ";
 
             $results = DB::select(DB::raw($query));
 
@@ -441,19 +416,6 @@ class GetDataController extends Controller
                 ORDER BY week;
             ";
 
-//             $query = "
-//     SELECT 
-//         WEEK(time, 1) AS week,
-//         YEAR(time) AS year,
-//         MIN(time) AS start_date,
-//         MAX(time) AS end_date,
-//         COUNT(*) AS total_records
-//     FROM $id
-//     WHERE MONTH(time) = 5 AND YEAR(time) = YEAR(CURDATE())
-//     GROUP BY week, year
-//     ORDER BY week;
-// ";
-
             $results = DB::select(DB::raw($query));
 
             // Calculate the weekly percentages
@@ -529,18 +491,6 @@ class GetDataController extends Controller
             GROUP BY week, year
             ORDER BY week;
         ";
-    //     $query = "
-    //     SELECT 
-    //         WEEK(time, 1) AS week,
-    //         YEAR(time) AS year,
-    //         MIN(time) AS start_date,
-    //         MAX(time) AS end_date,
-    //         COUNT(*) AS total_records
-    //     FROM $id
-    //     WHERE MONTH(time) = 5 AND YEAR(time) = YEAR(CURDATE())
-    //     GROUP BY week, year
-    //     ORDER BY week;
-    // ";
 
             $results = DB::select(DB::raw($query));
 
@@ -613,19 +563,6 @@ class GetDataController extends Controller
             GROUP BY week, year
             ORDER BY week;
         ";
-
-    //     $query = "
-    //     SELECT 
-    //         WEEK(time, 1) AS week,
-    //         YEAR(time) AS year,
-    //         MIN(time) AS start_date,
-    //         MAX(time) AS end_date,
-    //         COUNT(*) AS total_records
-    //     FROM $id
-    //     WHERE MONTH(time) = 5 AND YEAR(time) = YEAR(CURDATE())
-    //     GROUP BY week, year
-    //     ORDER BY week;
-    // ";
 
             $results = DB::select(DB::raw($query));
 
@@ -700,19 +637,6 @@ class GetDataController extends Controller
             GROUP BY week, year
             ORDER BY week;
         ";
-
-    //     $query = "
-    //     SELECT 
-    //         WEEK(time, 1) AS week,
-    //         YEAR(time) AS year,
-    //         MIN(time) AS start_date,
-    //         MAX(time) AS end_date,
-    //         COUNT(*) AS total_records
-    //     FROM $id
-    //     WHERE MONTH(time) = 5 AND YEAR(time) = YEAR(CURDATE())
-    //     GROUP BY week, year
-    //     ORDER BY week;
-    // ";
 
             $results = DB::select(DB::raw($query));
 

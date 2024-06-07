@@ -6,6 +6,7 @@ use App\Http\Controllers\SparingController;
 use App\Http\Controllers\GetDataController;
 use App\Http\Controllers\GetDataHoursController;
 use App\Http\Controllers\ApiRoutesController;
+use App\Http\Controllers\PreviousMonthDataController;
 
 
 /*
@@ -40,6 +41,4 @@ use App\Http\Controllers\ApiRoutesController;
     Route::get('sparing/percentages-hours/pwk', [GetDataHoursController::class, 'getMonthlyAveragePercentageHoursForIndoramaPWKSites']);
 
 
-    Route::middleware('throttle:60,1')->group(function () {
-        Route::get('sparing/routes', [ApiRoutesController::class, 'getRoutes']);
-    });
+    Route::post('sparing/previous-month-data', [PreviousMonthDataController::class, 'getPreviousMonthData']);
