@@ -21,10 +21,12 @@ use App\Http\Controllers\PreviousMonthDataController;
 */
 
 
-    // router sparing per 2mnt
+
     Route::get('sparing/data', [GetDataController::class, 'getData']);
     Route::get('sparing/mutu', [GetDataController::class, 'getDataMutu']);
     Route::get('sparing/data-count', [GetDataController::class, 'getCountData']);
+
+    // router sparing per2mnt
     Route::get('sparing/sparing-weekly-data/{id}', [GetDataController::class, 'getWeeklyDataById']);
     Route::get('sparing/percentages', [GetDataController::class, 'getMonthlyAveragePercentages']);
     Route::get('sparing/percentages/all', [GetDataController::class, 'getMonthlyAveragePercentageForAllSites']);
@@ -41,4 +43,6 @@ use App\Http\Controllers\PreviousMonthDataController;
     Route::get('sparing/percentages-hours/pwk', [GetDataHoursController::class, 'getMonthlyAveragePercentageHoursForIndoramaPWKSites']);
 
 
+// router histroy data per 2 menit
     Route::get('sparing/previous-month-data/{id}/{month}/{year}', [PreviousMonthDataController::class, 'getPreviousMonthData']);
+    Route::get('sparing/percentages/{month}/{year}', [PreviousMonthDataController::class, 'getPreviousMonthData']);
