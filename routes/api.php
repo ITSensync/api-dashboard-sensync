@@ -46,3 +46,4 @@ use App\Http\Controllers\PreviousMonthDataController;
 // router histroy data per 2 menit
     Route::get('sparing/previous-month-data/{id}/{month}/{year}', [PreviousMonthDataController::class, 'getPreviousMonthData']);
     Route::get('sparing/percentages/{month}/{year}', [PreviousMonthDataController::class, 'getPreviousAveragePercentages']);
+    Route::get('sparing/percentages/all/{month}/{year}', [PreviousMonthDataController::class, 'getPreviousAveragePercentagesAllSites']);
