@@ -33,7 +33,6 @@ class PreviousMonthDataController extends Controller
             SELECT 
                 WEEK(time, 1) AS week,
                 YEAR(time) AS year,
-                MONTH(time) AS month,
                 MIN(time) AS start_date,
                 MAX(time) AS end_date,
                 COUNT(*) AS total_records
