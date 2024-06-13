@@ -406,4 +406,78 @@ class PreviousMonthDataController extends Controller
               'data' => [$monthlyAverage]
           ]);
       }
+
+       // rata rata site sparing pwk
+       public function getPreviousAveragePercentagesPWKSites($month, $year)
+       {
+         $pwkIds = [
+             'weaving01' => 'Weaving 01',
+             'weaving02' => 'Weaving 02',
+             'spinning' => 'Spinning',
+         ];
+   
+           $pwkPercentages = [];
+   
+           foreach ($pwkIds as $id => $title) {
+               $query = "
+               SELECT 
+                   WEEK(time, 1) AS week,
+                   YEAR(time) AS year,
+                   MIN(time) AS start_date,
+                   MAX(time) AS end_date,
+                   COUNT(*) AS total_records
+               FROM $id
+               WHERE MONTH(time) = ? AND YEAR(time) = ?
+               GROUP BY week, year
+               ORDER BY week;
+               ";
+   
+               $results = DB::select(DB::raw($query), [$month, $year]);
+   
+               foreach ($results as $result) {
+                   $start_date = strtotime($result->start_date);
+                   $end_date = strtotime($result->end_date);
+                   $days = (int)ceil(($end_date - $start_date + 1) / (60 * 60 * 24));
+   
+                   $expected_count = 720 * $days;
+                   $data_count = $result->total_records;
+                   $percent = ($data_count / $expected_count) * 100;
+   
+                   if ($percent > 100) {
+                       $percent = 100;
+                   }
+                   $percent = number_format($percent, 2);
+   
+                   $pwkPercentages[] = $percent;
+               }
+           }
+   
+           // Calculate the overall monthly average percentage for Bandung sites
+           if (count($pwkPercentages) > 0) {
+               $averagePercent = array_sum($pwkPercentages) / count($pwkPercentages);
+               $averagePercent = number_format($averagePercent, 2);
+   
+               $monthlyAverage = [
+                   'id' => 'sparing',
+                   'title' => 'Bandung sites',
+                   'year' => $year,
+                   'month' => $month,
+                   'average_percent' => $averagePercent,
+               ];
+           } else {
+               $monthlyAverage = [
+                   'id' => 'sparing',
+                   'title' => 'Bandung sites',
+                   'year' => $year,
+                   'month' => $month,
+                   'average_percent' => '0.00',
+               ];
+           }
+   
+           return response()->json([
+               'status' => 'OK',
+               'message' => 'Success',
+               'data' => [$monthlyAverage]
+           ]);
+       }
 }

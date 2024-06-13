@@ -49,3 +49,4 @@ use App\Http\Controllers\PreviousMonthDataController;
     Route::get('sparing/percentages/all/{month}/{year}', [PreviousMonthDataController::class, 'getPreviousAveragePercentagesAllSites']);
     Route::get('sparing/percentages/bandung/{month}/{year}', [PreviousMonthDataController::class, 'getPreviousAveragePercentagesBandungSites']);
     Route::get('sparing/percentages/nonbandung/{month}/{year}', [PreviousMonthDataController::class, 'getPreviousAveragePercentagesNonBandungSites']);
+    Route::get('sparing/percentages/pwk/{month}/{year}', [PreviousMonthDataController::class, 'getPreviousAveragePercentagesPWKSites']);
