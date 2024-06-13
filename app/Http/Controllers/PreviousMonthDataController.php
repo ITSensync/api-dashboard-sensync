@@ -68,6 +68,7 @@ class PreviousMonthDataController extends Controller
             $data[] = [
                 // 'week' => $result->week,
                 'year' => $result->year,
+                'month' => $result->month,
                 'interval_date' => $interval_date,
                 'data_count' => $data_count,
                 'percent' => $percent
@@ -147,6 +148,8 @@ class PreviousMonthDataController extends Controller
                 $monthlyAverages[] = [
                     'id' => $id,
                     'title' => $title,
+                    'year' => $result -> year,
+                    'month' => $result -> month,
                     'average_percent' => $averagePercent,
                 ];
             }
@@ -225,12 +228,16 @@ class PreviousMonthDataController extends Controller
             $monthlyAverage = [
                 'id' => 'sparing',
                 'title' => 'all site',
+                'year' => $result -> year,
+                'month' => $result -> month,
                 'average_percent' => $averagePercent,
             ];
         } else {
             $monthlyAverage = [
                 'id' => 'sparing',
                 'title' => 'all site',
+                'year' => $result -> year,
+                'month' => $result -> month,
                 'average_percent' => '0.00',
             ];
         }
