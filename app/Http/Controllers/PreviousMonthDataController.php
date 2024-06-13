@@ -9,6 +9,24 @@ class PreviousMonthDataController extends Controller
 {
     public function getPreviousMonthData($id, $month, $year)
     {
+        $validIds = [
+            'sparing01' => 'Gistex',
+            'sparing02' => 'Indorama PWK',
+            'sparing03' => 'PMT',
+            'sparing04' => 'Indorama PDL',
+            'sparing05' => 'Besland',
+            'sparing06' => 'Indotaisei',
+            'sparing07' => 'Daliatex',
+            'sparing08' => 'Papyrus',
+            'sparing09' => 'BCP',
+            'sparing10' => 'Pangjaya',
+            'sparing11' => 'LPA',
+            'weaving01' => 'weaving01',
+            'weaving02' => 'weaving02',
+            'spinning' => 'spinning',
+        ];
+        $title = $validIds[$id];
+
         // Query untuk mendapatkan data bulan sebelumnya
         $query = "
             SELECT 
@@ -47,7 +65,7 @@ class PreviousMonthDataController extends Controller
             $interval_date = date('d M', $start_date) . ' - ' . date('d M', $end_date);
 
             $data[] = [
-                'week' => $result->week,
+                // 'week' => $result->week,
                 'year' => $result->year,
                 'interval_date' => $interval_date,
                 'data_count' => $data_count,
@@ -59,6 +77,7 @@ class PreviousMonthDataController extends Controller
             'status' => 'OK',
             'message' => 'Success',
             'id' => $id,
+            'title' => $title,
             'data' => $data
         ]);
     }
