@@ -189,7 +189,7 @@ class PreviousMonthDataController extends Controller
                 YEAR(time) AS year,
                 MIN(time) AS start_date,
                 MAX(time) AS end_date,
-                MAX(time) AS total_records
+                COUNT(time) AS total_records
             FROM $id
             WHERE MONTH(time) = ? AND YEAR(time) = ?
             GROUP BY week, year
