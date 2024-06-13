@@ -85,6 +85,7 @@ class PreviousMonthDataController extends Controller
     }
 
 
+    // rata rata sparing bulanan
     public function getPreviousAveragePercentages($month, $year)
     {
         $validIds = [
@@ -108,17 +109,17 @@ class PreviousMonthDataController extends Controller
 
         foreach ($validIds as $id => $title) {
             $query = "
-            SELECT
-                WEEK(time, 1) AS week,
-                YEAR(time) AS year,
-                MIN(time) AS start_date,
-                MAX(time) AS end_date,
-                COUNT(*) AS total_records
-            FROM $id
-            WHERE MONTH(time) = ? AND YEAR(time) = ?
-            GROUP BY week, year
-            ORDER BY week;
-        ";
+        SELECT
+            WEEK(time, 1) AS week,
+            YEAR(time) AS year,
+            MIN(time) AS start_date,
+            MAX(time) AS end_date,
+            COUNT(*) AS total_records
+        FROM $id
+        WHERE MONTH(time) = ? AND YEAR(time) = ?
+        GROUP BY week, year
+        ORDER BY week;
+    ";
 
             $results = DB::select(DB::raw($query), [$month, $year]);
 
@@ -148,8 +149,8 @@ class PreviousMonthDataController extends Controller
                 $monthlyAverages[] = [
                     'id' => $id,
                     'title' => $title,
-                    'year' => $result -> year,
-                    'month' => $result -> month,
+                    'year' => $year,
+                    'month' => $month,
                     'average_percent' => $averagePercent,
                 ];
             }
@@ -161,6 +162,7 @@ class PreviousMonthDataController extends Controller
             'data' => $monthlyAverages
         ]);
     }
+
 
 
     // rata rata semua site sparing 
@@ -228,16 +230,16 @@ class PreviousMonthDataController extends Controller
             $monthlyAverage = [
                 'id' => 'sparing',
                 'title' => 'all site',
-                'year' => $result -> year,
-                'month' => $result -> month,
+                'year' => $result->year,
+                'month' => $month,
                 'average_percent' => $averagePercent,
             ];
         } else {
             $monthlyAverage = [
                 'id' => 'sparing',
                 'title' => 'all site',
-                'year' => $result -> year,
-                'month' => $result -> month,
+                'year' => $result->year,
+                'month' => $result->month,
                 'average_percent' => '0.00',
             ];
         }
