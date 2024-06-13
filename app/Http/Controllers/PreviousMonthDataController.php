@@ -230,7 +230,7 @@ class PreviousMonthDataController extends Controller
             $monthlyAverage = [
                 'id' => 'sparing',
                 'title' => 'all site',
-                'year' => $result->year,
+                'year' => $year,
                 'month' => $month,
                 'average_percent' => $averagePercent,
             ];
@@ -240,6 +240,81 @@ class PreviousMonthDataController extends Controller
                 'title' => 'all site',
                 'year' => $result->year,
                 'month' => $result->month,
+                'average_percent' => '0.00',
+            ];
+        }
+
+        return response()->json([
+            'status' => 'OK',
+            'message' => 'Success',
+            'data' => [$monthlyAverage]
+        ]);
+    }
+
+
+    // rata rata site sparing bandung 
+    public function getPreviousAveragePercentagesBandungSites($month, $year)
+    {
+        $bandungIds = [
+            'sparing01' => 'Gistex',
+            'sparing03' => 'PMT',
+            'sparing04' => 'Indorama PDL',
+            'sparing07' => 'Daliatex',
+            'sparing08' => 'Papyrus',
+            'sparing09' => 'BCP',
+            'sparing10' => 'Pangjaya',
+        ];
+
+        $BandungPercentages = [];
+
+        foreach ($bandungIds as $id => $title) {
+            $query = "
+            SELECT 
+                WEEK(time, 1) AS week,
+                YEAR(time) AS year,
+                MIN(time) AS start_date,
+                MAX(time) AS end_date,
+                COUNT(*) AS total_records
+            FROM $id
+            WHERE MONTH(time) = ? AND YEAR(time) = ?
+            GROUP BY week, year
+            ORDER BY week;
+            ";
+
+            $results = DB::select(DB::raw($query), [$month, $year]);
+
+            foreach ($results as $result) {
+                $start_date = strtotime($result->start_date);
+                $end_date = strtotime($result->end_date);
+                $days = (int)ceil(($end_date - $start_date + 1) / (60 * 60 * 24));
+
+                $expected_count = 720 * $days;
+                $data_count = $result->total_records;
+                $percent = ($data_count / $expected_count) * 100;
+
+                if ($percent > 100) {
+                    $percent = 100;
+                }
+                $percent = number_format($percent, 2);
+
+                $BandungPercentages[] = $percent;
+            }
+        }
+
+        // Calculate the overall monthly average percentage for Bandung sites
+        if (count($BandungPercentages) > 0) {
+            $averagePercent = array_sum($BandungPercentages) / count($BandungPercentages);
+            $averagePercent = number_format($averagePercent, 2);
+
+            $monthlyAverage = [
+                'id' => 'sparing',
+                'title' => 'Bandung sites',
+                'average_percent' => $averagePercent,
+            ];
+        } else {
+            $monthlyAverage = [
+                'id' => 'sparing',
+                'title' => 'Bandung sites',
                 'average_percent' => '0.00',
             ];
         }
