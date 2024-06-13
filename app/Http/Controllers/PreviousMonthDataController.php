@@ -68,7 +68,7 @@ class PreviousMonthDataController extends Controller
             $data[] = [
                 // 'week' => $result->week,
                 'year' => $result->year,
-                'month' => $result->month,
+                'month' => $month,
                 'interval_date' => $interval_date,
                 'data_count' => $data_count,
                 'percent' => $percent
