@@ -47,3 +47,4 @@ use App\Http\Controllers\PreviousMonthDataController;
     Route::get('sparing/previous-month-data/{id}/{month}/{year}', [PreviousMonthDataController::class, 'getPreviousMonthData']);
     Route::get('sparing/percentages/{month}/{year}', [PreviousMonthDataController::class, 'getPreviousAveragePercentages']);
     Route::get('sparing/percentages/all/{month}/{year}', [PreviousMonthDataController::class, 'getPreviousAveragePercentagesAllSites']);
+    Route::get('sparing/percentages/bandung/{month}/{year}', [PreviousMonthDataController::class, 'getPreviousAveragePercentagesBandungSites']);
