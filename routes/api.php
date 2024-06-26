@@ -7,6 +7,7 @@ use App\Http\Controllers\GetDataController;
 use App\Http\Controllers\GetDataHoursController;
 use App\Http\Controllers\ApiRoutesController;
 use App\Http\Controllers\PreviousMonthDataController;
+use App\Http\Controllers\PreviousMonthDataPerjamController;
 
 
 /*
@@ -50,3 +51,12 @@ use App\Http\Controllers\PreviousMonthDataController;
     Route::get('sparing/percentages/bandung/{month}/{year}', [PreviousMonthDataController::class, 'getPreviousAveragePercentagesBandungSites']);
     Route::get('sparing/percentages/nonbandung/{month}/{year}', [PreviousMonthDataController::class, 'getPreviousAveragePercentagesNonBandungSites']);
     Route::get('sparing/percentages/pwk/{month}/{year}', [PreviousMonthDataController::class, 'getPreviousAveragePercentagesPWKSites']);
+
+
+    // router histroy data per jam
+    Route::get('sparing/previous-month-data-hours/{id}/{month}/{year}', [PreviousMonthDataPerjamController::class, 'getPreviousMonthDataPerjam']);
+    Route::get('sparing/percentages-hours/{month}/{year}', [PreviousMonthDataPerjamController::class, 'getPreviousAveragePercentagesPerjam']);
+    Route::get('sparing/percentages-hours/all/{month}/{year}', [PreviousMonthDataPerjamController::class, 'getPreviousAveragePercentagesAllSitesPerjam']);
+    Route::get('sparing/percentages-hours/bandung/{month}/{year}', [PreviousMonthDataPerjamController::class, 'getPreviousAveragePercentagesBandungSitesPerjam']);
+    Route::get('sparing/percentages-hours/nonbandung/{month}/{year}', [PreviousMonthDataPerjamController::class, 'getPreviousAveragePercentagesNonBandungSitesPerjam']);
+    Route::get('sparing/percentages-hours/pwk/{month}/{year}', [PreviousMonthDataPerjamController::class, 'getPreviousAveragePercentagesPWKSitesPerjam']);
