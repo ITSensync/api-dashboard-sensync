@@ -130,7 +130,7 @@ class PreviousMonthDataPerjamController extends Controller
                 $days = (int)ceil(($end_date - $start_date + 1) / (60 * 60 * 24));
 
                 // Calculate expected count based on the number of days
-                $expected_count = 720 * $days;
+                $expected_count = 24 * $days;
                 $data_count = $result->total_records;
                 $percent = ($data_count / $expected_count) * 100;
                 if ($percent > 100) {
@@ -210,7 +210,7 @@ class PreviousMonthDataPerjamController extends Controller
                 $days = (int)ceil(($end_date - $start_date + 1) / (60 * 60 * 24));
 
                 // Calculate expected count based on the number of days
-                $expected_count = 720 * $days;
+                $expected_count = 24 * $days;
                 $data_count = $result->total_records;
                 $percent = ($data_count / $expected_count) * 100;
                 if ($percent > 100) {
@@ -288,7 +288,7 @@ class PreviousMonthDataPerjamController extends Controller
                 $end_date = strtotime($result->end_date);
                 $days = (int)ceil(($end_date - $start_date + 1) / (60 * 60 * 24));
 
-                $expected_count = 720 * $days;
+                $expected_count = 24 * $days;
                 $data_count = $result->total_records;
                 $percent = ($data_count / $expected_count) * 100;
 
@@ -365,7 +365,7 @@ class PreviousMonthDataPerjamController extends Controller
                 $end_date = strtotime($result->end_date);
                 $days = (int)ceil(($end_date - $start_date + 1) / (60 * 60 * 24));
 
-                $expected_count = 720 * $days;
+                $expected_count = 24 * $days;
                 $data_count = $result->total_records;
                 $percent = ($data_count / $expected_count) * 100;
 
@@ -385,7 +385,7 @@ class PreviousMonthDataPerjamController extends Controller
 
             $monthlyAverage = [
                 'id' => 'sparing',
-                'title' => 'Bandung sites',
+                'title' => 'Non Bandung',
                 'year' => $year,
                 'month' => $month,
                 'average_percent' => $averagePercent,
@@ -393,7 +393,7 @@ class PreviousMonthDataPerjamController extends Controller
         } else {
             $monthlyAverage = [
                 'id' => 'sparing',
-                'title' => 'Bandung sites',
+                'title' => 'Non Bandung',
                 'year' => $year,
                 'month' => $month,
                 'average_percent' => '0.00',
@@ -439,7 +439,7 @@ class PreviousMonthDataPerjamController extends Controller
                 $end_date = strtotime($result->end_date);
                 $days = (int)ceil(($end_date - $start_date + 1) / (60 * 60 * 24));
 
-                $expected_count = 720 * $days;
+                $expected_count = 24 * $days;
                 $data_count = $result->total_records;
                 $percent = ($data_count / $expected_count) * 100;
 
@@ -459,7 +459,7 @@ class PreviousMonthDataPerjamController extends Controller
 
             $monthlyAverage = [
                 'id' => 'sparing',
-                'title' => 'Bandung sites',
+                'title' => 'PWK',
                 'year' => $year,
                 'month' => $month,
                 'average_percent' => $averagePercent,
@@ -467,7 +467,7 @@ class PreviousMonthDataPerjamController extends Controller
         } else {
             $monthlyAverage = [
                 'id' => 'sparing',
-                'title' => 'Bandung sites',
+                'title' => 'PWK',
                 'year' => $year,
                 'month' => $month,
                 'average_percent' => '0.00',

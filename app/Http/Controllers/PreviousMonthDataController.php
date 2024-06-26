@@ -385,7 +385,7 @@ class PreviousMonthDataController extends Controller
   
               $monthlyAverage = [
                   'id' => 'sparing',
-                  'title' => 'Bandung sites',
+                  'title' => 'Non Bandung',
                   'year' => $year,
                   'month' => $month,
                   'average_percent' => $averagePercent,
@@ -393,7 +393,7 @@ class PreviousMonthDataController extends Controller
           } else {
               $monthlyAverage = [
                   'id' => 'sparing',
-                  'title' => 'Bandung sites',
+                  'title' => 'Non Bandung',
                   'year' => $year,
                   'month' => $month,
                   'average_percent' => '0.00',
@@ -459,7 +459,7 @@ class PreviousMonthDataController extends Controller
    
                $monthlyAverage = [
                    'id' => 'sparing',
-                   'title' => 'Bandung sites',
+                   'title' => 'PWK',
                    'year' => $year,
                    'month' => $month,
                    'average_percent' => $averagePercent,
@@ -467,7 +467,7 @@ class PreviousMonthDataController extends Controller
            } else {
                $monthlyAverage = [
                    'id' => 'sparing',
-                   'title' => 'Bandung sites',
+                   'title' => 'PWK',
                    'year' => $year,
                    'month' => $month,
                    'average_percent' => '0.00',
