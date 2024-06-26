@@ -37,7 +37,7 @@ class PreviousMonthDataPerjamController extends Controller
                 MAX(CONCAT(tanggal, ' ', jam)) AS end_date,
                 COUNT(*) AS total_records
             FROM $id
-            WHERE MONTH(tanggal) = ? AND YEAR(tanngal) = ?
+            WHERE MONTH(tanggal) = ? AND YEAR(tanggal) = ?
             GROUP BY week, year
             ORDER BY week;
         ";
