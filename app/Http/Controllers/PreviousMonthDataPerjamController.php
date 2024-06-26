@@ -31,10 +31,10 @@ class PreviousMonthDataPerjamController extends Controller
         // Query untuk mendapatkan data bulan sebelumnya
         $query = "
             SELECT 
-                WEEK(time, 1) AS week,
-                YEAR(time) AS year,
-                MIN(time) AS start_date,
-                MAX(time) AS end_date,
+                WEEK(CONCAT(tanggal, ' ', jam), 1) AS week,
+                YEAR(CONCAT(tanggal, ' ', jam)) AS year,
+                MIN(CONCAT(tanggal, ' ', jam)) AS start_date,
+                MAX(CONCAT(tanggal, ' ', jam)) AS end_date,
                 COUNT(*) AS total_records
             FROM $id
             WHERE MONTH(time) = ? AND YEAR(time) = ?
@@ -110,10 +110,10 @@ class PreviousMonthDataPerjamController extends Controller
         foreach ($validIds as $id => $title) {
             $query = "
         SELECT
-            WEEK(time, 1) AS week,
-            YEAR(time) AS year,
-            MIN(time) AS start_date,
-            MAX(time) AS end_date,
+            WEEK(CONCAT(tanggal, ' ', jam), 1) AS week,
+            YEAR(CONCAT(tanggal, ' ', jam)) AS year,
+            MIN(CONCAT(tanggal, ' ', jam)) AS start_date,
+            MAX(CONCAT(tanggal, ' ', jam)) AS end_date,
             COUNT(*) AS total_records
         FROM $id
         WHERE MONTH(time) = ? AND YEAR(time) = ?
@@ -190,11 +190,11 @@ class PreviousMonthDataPerjamController extends Controller
         foreach ($validIds as $id => $title) {
             $query = "
             SELECT 
-                WEEK(time, 1) AS week,
-                YEAR(time) AS year,
-                MIN(time) AS start_date,
-                MAX(time) AS end_date,
-                COUNT(time) AS total_records
+                WEEK(CONCAT(tanggal, ' ', jam), 1) AS week,
+                YEAR(CONCAT(tanggal, ' ', jam)) AS year,
+                MIN(CONCAT(tanggal, ' ', jam)) AS start_date,
+                MAX(CONCAT(tanggal, ' ', jam)) AS end_date,
+                COUNT(*) AS total_records
             FROM $id
             WHERE MONTH(time) = ? AND YEAR(time) = ?
             GROUP BY week, year
@@ -270,10 +270,10 @@ class PreviousMonthDataPerjamController extends Controller
         foreach ($bandungIds as $id => $title) {
             $query = "
             SELECT 
-                WEEK(time, 1) AS week,
-                YEAR(time) AS year,
-                MIN(time) AS start_date,
-                MAX(time) AS end_date,
+                WEEK(CONCAT(tanggal, ' ', jam), 1) AS week,
+                YEAR(CONCAT(tanggal, ' ', jam)) AS year,
+                MIN(CONCAT(tanggal, ' ', jam)) AS start_date,
+                MAX(CONCAT(tanggal, ' ', jam)) AS end_date,
                 COUNT(*) AS total_records
             FROM $id
             WHERE MONTH(time) = ? AND YEAR(time) = ?
@@ -331,9 +331,9 @@ class PreviousMonthDataPerjamController extends Controller
     }
 
 
-      // rata rata site sparing non bandung
-      public function getPreviousAveragePercentagesNonBandungSitesPerjam($month, $year)
-      {
+    // rata rata site sparing non bandung
+    public function getPreviousAveragePercentagesNonBandungSitesPerjam($month, $year)
+    {
         $nonBandungIds = [
             'sparing02_lap' => 'Indorama PWK',
             'sparing05_lap' => 'Besland',
@@ -341,143 +341,143 @@ class PreviousMonthDataPerjamController extends Controller
             'sparing11_lap' => 'LPA',
 
         ];
-  
-          $nonBandungPercentages = [];
-  
-          foreach ($nonBandungIds as $id => $title) {
-              $query = "
+
+        $nonBandungPercentages = [];
+
+        foreach ($nonBandungIds as $id => $title) {
+            $query = "
               SELECT 
-                  WEEK(time, 1) AS week,
-                  YEAR(time) AS year,
-                  MIN(time) AS start_date,
-                  MAX(time) AS end_date,
-                  COUNT(*) AS total_records
+                WEEK(CONCAT(tanggal, ' ', jam), 1) AS week,
+                YEAR(CONCAT(tanggal, ' ', jam)) AS year,
+                MIN(CONCAT(tanggal, ' ', jam)) AS start_date,
+                MAX(CONCAT(tanggal, ' ', jam)) AS end_date,
+                COUNT(*) AS total_records
               FROM $id
               WHERE MONTH(time) = ? AND YEAR(time) = ?
               GROUP BY week, year
               ORDER BY week;
               ";
-  
-              $results = DB::select(DB::raw($query), [$month, $year]);
-  
-              foreach ($results as $result) {
-                  $start_date = strtotime($result->start_date);
-                  $end_date = strtotime($result->end_date);
-                  $days = (int)ceil(($end_date - $start_date + 1) / (60 * 60 * 24));
-  
-                  $expected_count = 720 * $days;
-                  $data_count = $result->total_records;
-                  $percent = ($data_count / $expected_count) * 100;
-  
-                  if ($percent > 100) {
-                      $percent = 100;
-                  }
-                  $percent = number_format($percent, 2);
-  
-                  $nonBandungPercentages[] = $percent;
-              }
-          }
-  
-          // Calculate the overall monthly average percentage for Bandung sites
-          if (count($nonBandungPercentages) > 0) {
-              $averagePercent = array_sum($nonBandungPercentages) / count($nonBandungPercentages);
-              $averagePercent = number_format($averagePercent, 2);
-  
-              $monthlyAverage = [
-                  'id' => 'sparing',
-                  'title' => 'Bandung sites',
-                  'year' => $year,
-                  'month' => $month,
-                  'average_percent' => $averagePercent,
-              ];
-          } else {
-              $monthlyAverage = [
-                  'id' => 'sparing',
-                  'title' => 'Bandung sites',
-                  'year' => $year,
-                  'month' => $month,
-                  'average_percent' => '0.00',
-              ];
-          }
-  
-          return response()->json([
-              'status' => 'OK',
-              'message' => 'Success',
-              'data' => [$monthlyAverage]
-          ]);
-      }
 
-       // rata rata site sparing pwk
-       public function getPreviousAveragePercentagesPWKSitesPerjam($month, $year)
-       {
-         $pwkIds = [
-             'weaving01_lap' => 'Weaving 01',
-             'weaving02_lap' => 'Weaving 02',
-             'spinning_lap' => 'Spinning',
-         ];
-   
-           $pwkPercentages = [];
-   
-           foreach ($pwkIds as $id => $title) {
-               $query = "
+            $results = DB::select(DB::raw($query), [$month, $year]);
+
+            foreach ($results as $result) {
+                $start_date = strtotime($result->start_date);
+                $end_date = strtotime($result->end_date);
+                $days = (int)ceil(($end_date - $start_date + 1) / (60 * 60 * 24));
+
+                $expected_count = 720 * $days;
+                $data_count = $result->total_records;
+                $percent = ($data_count / $expected_count) * 100;
+
+                if ($percent > 100) {
+                    $percent = 100;
+                }
+                $percent = number_format($percent, 2);
+
+                $nonBandungPercentages[] = $percent;
+            }
+        }
+
+        // Calculate the overall monthly average percentage for Bandung sites
+        if (count($nonBandungPercentages) > 0) {
+            $averagePercent = array_sum($nonBandungPercentages) / count($nonBandungPercentages);
+            $averagePercent = number_format($averagePercent, 2);
+
+            $monthlyAverage = [
+                'id' => 'sparing',
+                'title' => 'Bandung sites',
+                'year' => $year,
+                'month' => $month,
+                'average_percent' => $averagePercent,
+            ];
+        } else {
+            $monthlyAverage = [
+                'id' => 'sparing',
+                'title' => 'Bandung sites',
+                'year' => $year,
+                'month' => $month,
+                'average_percent' => '0.00',
+            ];
+        }
+
+        return response()->json([
+            'status' => 'OK',
+            'message' => 'Success',
+            'data' => [$monthlyAverage]
+        ]);
+    }
+
+    // rata rata site sparing pwk
+    public function getPreviousAveragePercentagesPWKSitesPerjam($month, $year)
+    {
+        $pwkIds = [
+            'weaving01_lap' => 'Weaving 01',
+            'weaving02_lap' => 'Weaving 02',
+            'spinning_lap' => 'Spinning',
+        ];
+
+        $pwkPercentages = [];
+
+        foreach ($pwkIds as $id => $title) {
+            $query = "
                SELECT 
-                   WEEK(time, 1) AS week,
-                   YEAR(time) AS year,
-                   MIN(time) AS start_date,
-                   MAX(time) AS end_date,
-                   COUNT(*) AS total_records
+                WEEK(CONCAT(tanggal, ' ', jam), 1) AS week,
+                YEAR(CONCAT(tanggal, ' ', jam)) AS year,
+                MIN(CONCAT(tanggal, ' ', jam)) AS start_date,
+                MAX(CONCAT(tanggal, ' ', jam)) AS end_date,
+                COUNT(*) AS total_records
                FROM $id
                WHERE MONTH(time) = ? AND YEAR(time) = ?
                GROUP BY week, year
                ORDER BY week;
                ";
-   
-               $results = DB::select(DB::raw($query), [$month, $year]);
-   
-               foreach ($results as $result) {
-                   $start_date = strtotime($result->start_date);
-                   $end_date = strtotime($result->end_date);
-                   $days = (int)ceil(($end_date - $start_date + 1) / (60 * 60 * 24));
-   
-                   $expected_count = 720 * $days;
-                   $data_count = $result->total_records;
-                   $percent = ($data_count / $expected_count) * 100;
-   
-                   if ($percent > 100) {
-                       $percent = 100;
-                   }
-                   $percent = number_format($percent, 2);
-   
-                   $pwkPercentages[] = $percent;
-               }
-           }
-   
-           // Calculate the overall monthly average percentage for Bandung sites
-           if (count($pwkPercentages) > 0) {
-               $averagePercent = array_sum($pwkPercentages) / count($pwkPercentages);
-               $averagePercent = number_format($averagePercent, 2);
-   
-               $monthlyAverage = [
-                   'id' => 'sparing',
-                   'title' => 'Bandung sites',
-                   'year' => $year,
-                   'month' => $month,
-                   'average_percent' => $averagePercent,
-               ];
-           } else {
-               $monthlyAverage = [
-                   'id' => 'sparing',
-                   'title' => 'Bandung sites',
-                   'year' => $year,
-                   'month' => $month,
-                   'average_percent' => '0.00',
-               ];
-           }
-   
-           return response()->json([
-               'status' => 'OK',
-               'message' => 'Success',
-               'data' => [$monthlyAverage]
-           ]);
-       }
+
+            $results = DB::select(DB::raw($query), [$month, $year]);
+
+            foreach ($results as $result) {
+                $start_date = strtotime($result->start_date);
+                $end_date = strtotime($result->end_date);
+                $days = (int)ceil(($end_date - $start_date + 1) / (60 * 60 * 24));
+
+                $expected_count = 720 * $days;
+                $data_count = $result->total_records;
+                $percent = ($data_count / $expected_count) * 100;
+
+                if ($percent > 100) {
+                    $percent = 100;
+                }
+                $percent = number_format($percent, 2);
+
+                $pwkPercentages[] = $percent;
+            }
+        }
+
+        // Calculate the overall monthly average percentage for Bandung sites
+        if (count($pwkPercentages) > 0) {
+            $averagePercent = array_sum($pwkPercentages) / count($pwkPercentages);
+            $averagePercent = number_format($averagePercent, 2);
+
+            $monthlyAverage = [
+                'id' => 'sparing',
+                'title' => 'Bandung sites',
+                'year' => $year,
+                'month' => $month,
+                'average_percent' => $averagePercent,
+            ];
+        } else {
+            $monthlyAverage = [
+                'id' => 'sparing',
+                'title' => 'Bandung sites',
+                'year' => $year,
+                'month' => $month,
+                'average_percent' => '0.00',
+            ];
+        }
+
+        return response()->json([
+            'status' => 'OK',
+            'message' => 'Success',
+            'data' => [$monthlyAverage]
+        ]);
+    }
 }
