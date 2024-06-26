@@ -37,7 +37,7 @@ class PreviousMonthDataPerjamController extends Controller
                 MAX(CONCAT(tanggal, ' ', jam)) AS end_date,
                 COUNT(*) AS total_records
             FROM $id
-            WHERE MONTH(time) = ? AND YEAR(time) = ?
+            WHERE MONTH(tanggal) = ? AND YEAR(tanngal) = ?
             GROUP BY week, year
             ORDER BY week;
         ";
@@ -116,7 +116,7 @@ class PreviousMonthDataPerjamController extends Controller
             MAX(CONCAT(tanggal, ' ', jam)) AS end_date,
             COUNT(*) AS total_records
         FROM $id
-        WHERE MONTH(time) = ? AND YEAR(time) = ?
+        WHERE MONTH(tanggal) = ? AND YEAR(tanggal) = ?
         GROUP BY week, year
         ORDER BY week;
     ";
@@ -196,7 +196,7 @@ class PreviousMonthDataPerjamController extends Controller
                 MAX(CONCAT(tanggal, ' ', jam)) AS end_date,
                 COUNT(*) AS total_records
             FROM $id
-            WHERE MONTH(time) = ? AND YEAR(time) = ?
+            WHERE MONTH(tanggal) = ? AND YEAR(tanggal) = ?
             GROUP BY week, year
             ORDER BY week;
             ";
@@ -276,7 +276,7 @@ class PreviousMonthDataPerjamController extends Controller
                 MAX(CONCAT(tanggal, ' ', jam)) AS end_date,
                 COUNT(*) AS total_records
             FROM $id
-            WHERE MONTH(time) = ? AND YEAR(time) = ?
+            WHERE MONTH(tanggal) = ? AND YEAR(tanggal) = ?
             GROUP BY week, year
             ORDER BY week;
             ";
@@ -353,7 +353,7 @@ class PreviousMonthDataPerjamController extends Controller
                 MAX(CONCAT(tanggal, ' ', jam)) AS end_date,
                 COUNT(*) AS total_records
               FROM $id
-              WHERE MONTH(time) = ? AND YEAR(time) = ?
+              WHERE MONTH(tanggal) = ? AND YEAR(tanggal) = ?
               GROUP BY week, year
               ORDER BY week;
               ";
@@ -427,7 +427,7 @@ class PreviousMonthDataPerjamController extends Controller
                 MAX(CONCAT(tanggal, ' ', jam)) AS end_date,
                 COUNT(*) AS total_records
                FROM $id
-               WHERE MONTH(time) = ? AND YEAR(time) = ?
+               WHERE MONTH(tanggal) = ? AND YEAR(tanggal) = ?
                GROUP BY week, year
                ORDER BY week;
                ";
