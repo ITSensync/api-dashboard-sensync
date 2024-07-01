@@ -28,7 +28,8 @@ class Sparing01 extends BaseSparing
 
     protected static $data = [
         'id' => 'sparing01',
-        'nama' => 'Gistex',
+        // 'nama' => 'Gistex',
+        'nama' => 'sparing01',
         'alamat' => 'Jl. Nanjung No.82, Lagadar, Kec. Margaasih, Kabupaten Bandung, Jawa Barat 40216, Indonesia',
         'Lat' => -6.9374571,
         'Long' => 107.5364919,

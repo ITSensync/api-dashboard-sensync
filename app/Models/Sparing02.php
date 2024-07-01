@@ -26,7 +26,8 @@ class Sparing02 extends BaseSparing
 
     protected static $data = [
         "id" => "sparing02",
-        "nama" => "Indorama PWK",
+        // "nama" => "Indorama PWK",
+        "nama" => "sparing02",
         "alamat" => "Jl. Industri Ubrug, Kembangkuning, Purwakarta Regency, West Java, Indonesia",
         "Lat" => -6.5531083,
         "Long" => 107.4101544,

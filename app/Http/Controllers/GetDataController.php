@@ -104,7 +104,8 @@ class GetDataController extends Controller
             [
                 'uuid' => Str::uuid(),
                 'id' => 'sparing01',
-                'title' => 'gistex',
+                // 'title' => 'gistex',
+                'title' => 'sparing01',
                 'data_count' => Sparing01::where('time', '>=', now()->subWeek())->count(),
                 'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y'),
                 'percent' => min(round(Sparing01::where('time', '>=', now()->subWeek())->count() / $totalExpectedData * 100, 2), 100)
@@ -112,7 +113,8 @@ class GetDataController extends Controller
             [
                 'uuid' => Str::uuid(),
                 'id' => 'sparing02',
-                'title' => 'indorama PWK',
+                // 'title' => 'indorama PWK',
+                'title' => 'sparing02',
                 'data_count' => Sparing02::where('time', '>=', now()->subWeek())->count(),
                 'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y'),
                 'percent' => min(round(Sparing02::where('time', '>=', now()->subWeek())->count() / $totalExpectedData * 100, 2), 100)
@@ -121,7 +123,8 @@ class GetDataController extends Controller
             [
                 'uuid' => Str::uuid(),
                 'id' => 'sparing03',
-                'title' => 'PMT',
+                // 'title' => 'PMT',
+                'title' => 'sparing03',
                 'data_count' => Sparing03::where('time', '>=', now()->subWeek())->count(),
                 'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y'),
                 'percent' => min(round(Sparing03::where('time', '>=', now()->subWeek())->count() / $totalExpectedData * 100, 2), 100)
@@ -129,7 +132,8 @@ class GetDataController extends Controller
             [
                 'uuid' => Str::uuid(),
                 'id' => 'sparing04',
-                'title' => 'indorama PDL',
+                // 'title' => 'indorama PDL',
+                'title' => 'sparing04',
                 'data_count' => Sparing04::where('time', '>=', now()->subWeek())->count(),
                 'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y'),
                 'percent' => min(round(Sparing04::where('time', '>=', now()->subWeek())->count() / $totalExpectedData * 100, 2), 100)
@@ -137,7 +141,8 @@ class GetDataController extends Controller
             [
                 'uuid' => Str::uuid(),
                 'id' => 'sparing05',
-                'title' => 'Besland',
+                // 'title' => 'Besland',
+                'title' => 'sparing05',
                 'data_count' => Sparing05::where('time', '>=', now()->subWeek())->count(),
                 'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y'),
                 'percent' => min(round(Sparing05::where('time', '>=', now()->subWeek())->count() / $totalExpectedData * 100, 2), 100)
@@ -145,7 +150,8 @@ class GetDataController extends Controller
             [
                 'uuid' => Str::uuid(),
                 'id' => 'sparing06',
-                'title' => 'Indotaisei',
+                // 'title' => 'Indotaisei',
+                'title' => 'sparing06',
                 'data_count' => Sparing06::where('time', '>=', now()->subWeek())->count(),
                 'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y'),
                 'percent' => min(round(Sparing06::where('time', '>=', now()->subWeek())->count() / $totalExpectedData * 100, 2), 100)
@@ -153,7 +159,8 @@ class GetDataController extends Controller
             [
                 'uuid' => Str::uuid(),
                 'id' => 'sparing07',
-                'title' => 'Daliatex',
+                // 'title' => 'Daliatex',
+                'title' => 'sparing07',
                 'data_count' => Sparing07::where('time', '>=', now()->subWeek())->count(),
                 'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y'),
                 'percent' => min(round(Sparing07::where('time', '>=', now()->subWeek())->count() / $totalExpectedData * 100, 2), 100)
@@ -161,7 +168,8 @@ class GetDataController extends Controller
             [
                 'uuid' => Str::uuid(),
                 'id' => 'sparing08',
-                'title' => 'Papyrus',
+                // 'title' => 'Papyrus',
+                'title' => 'sparing08',
                 'data_count' => Sparing08::where('time', '>=', now()->subWeek())->count(),
                 'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y'),
                 'percent' => min(round(Sparing08::where('time', '>=', now()->subWeek())->count() / $totalExpectedData * 100, 2), 100)
@@ -169,7 +177,8 @@ class GetDataController extends Controller
             [
                 'uuid' => Str::uuid(),
                 'id' => 'sparing09',
-                'title' => 'BCP',
+                // 'title' => 'BCP',
+                'title' => 'sparing09',
                 'data_count' => Sparing09::where('time', '>=', now()->subWeek())->count(),
                 'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y'),
                 'percent' => min(round(Sparing09::where('time', '>=', now()->subWeek())->count() / $totalExpectedData * 100, 2), 100)
@@ -177,7 +186,8 @@ class GetDataController extends Controller
             [
                 'uuid' => Str::uuid(),
                 'id' => 'sparing10',
-                'title' => 'Pangjaya',
+                // 'title' => 'Pangjaya',
+                'title' => 'sparing10',
                 'data_count' => Sparing10::where('time', '>=', now()->subWeek())->count(),
                 'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y'),
                 'percent' => min(round(Sparing10::where('time', '>=', now()->subWeek())->count() / $totalExpectedData * 100, 2), 100)
@@ -185,7 +195,8 @@ class GetDataController extends Controller
             [
                 'uuid' => Str::uuid(),
                 'id' => 'sparing11',
-                'title' => 'LPA',
+                // 'title' => 'LPA',
+                'title' => 'sparing11',
                 'data_count' => Sparing11::where('time', '>=', now()->subWeek())->count(),
                 'interval_date' => now()->subWeek()->format('d/m/Y') . ' - ' . now()->subDays(1)->format('d/m/Y'),
                 'percent' => min(round(Sparing11::where('time', '>=', now()->subWeek())->count() / $totalExpectedData * 100, 2), 100)

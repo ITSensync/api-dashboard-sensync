@@ -28,7 +28,8 @@ class Sparing04 extends BaseSparing
 
     protected static $data = [
         "id" => "sparing04",
-        "nama" => "Indorama PDL",
+        // "nama" => "Indorama PDL",
+        "nama" => "sparing04",
         "alamat" => "Jl. Batujajar Km 5.5 Komplek Giri Asih No 9, Samping, Giriasih, Batujajar, West Bandung Regency, West Java 40561, Indonesia",
         "Lat" => -6.8953855,
         "Long" => 107.4959834,

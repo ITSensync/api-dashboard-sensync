@@ -27,7 +27,8 @@ class Sparing07 extends BaseSparing
 
     protected static $data = [
         "id" => "sparing07",
-        "nama" => "Daliatex",
+        // "nama" => "Daliatex",
+        "nama" => "sparing07",
         "alamat" => " Jalan Mochammad Toha KM.7,3 No.307, Citeureup, Kec. Dayeuhkolot, Kabupaten Bandung, Jawa Barat 40257",
         "Lat" => -6.9801221,
         "Long" => 107.6185288,
