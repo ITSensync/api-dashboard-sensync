@@ -316,13 +316,13 @@ class GetDataHoursController extends Controller
 
             $monthlyAverage = [
                 'id' => 'sparing',
-                'title' => 'all site',
+                'title' => 'PWK',
                 'average_percent' => $averagePercent,
             ];
         } else {
             $monthlyAverage = [
                 'id' => 'sparing',
-                'title' => 'all site',
+                'title' => 'PWK',
                 'average_percent' => '0.00',
             ];
         }

@@ -603,13 +603,13 @@ class GetDataController extends Controller
 
             $monthlyAverage = [
                 'id' => 'sparing',
-                'title' => 'Indorama PWK',
+                'title' => 'PWK',
                 'average_percent' => $averagePercent,
             ];
         } else {
             $monthlyAverage = [
                 'id' => 'sparing',
-                'title' => 'Indorama PWK',
+                'title' => 'PWK',
                 'average_percent' => '0.00',
             ];
         }
